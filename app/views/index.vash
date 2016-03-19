@@ -1,0 +1,9 @@
+@html.extend('layout',function(model){
+    @html.block("body",function(model){
+                
+        <div class="row">
+            <p>@model.text</p>
+        </div>
+        
+    })
+})

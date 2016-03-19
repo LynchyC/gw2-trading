@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+    <head>
+        <title>@model.title</title>
+        @html.block("head")
+    </head>
+    <body>
+ 
+        <section id="body" class="container">
+            <div class="page-header">
+                <h1>@model.title</h1>
+            </div>
+            @html.block("body")
+        </section>
+        <hr />
+        <footer class="container">
+            <p>GW2 Calculator</p>
+        </footer>
+                
+        @html.block("scripts")
+    </body>
+</html>

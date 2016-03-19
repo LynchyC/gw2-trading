@@ -4,8 +4,11 @@
 
 module.exports = function(app) {
 
-    app.get('/', function(req, res) {
-        res.send("Hello World!");
+    app.get('/', (req, res) => {
+        res.render("index", {   
+           title: "GW2 Calculator",
+           text: "Hello World!" 
+        });
     });
 
 };
