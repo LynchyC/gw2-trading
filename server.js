@@ -9,9 +9,8 @@ var app     = express();
 // Set up port
 var port = process.env.PORT || 1337;
 
-app.get('/', (req,res) => {
-   res.send("Hello World!"); 
-});
+// Set up routes
+require('./app/routes')(app);
 
 // Start the server
 app.listen(port);
