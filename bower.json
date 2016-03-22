@@ -1,0 +1,29 @@
+{
+  "name": "gw2_calculator",
+  "description": "MEAN stack application that calculates your Black Lion Trading purchases",
+  "main": "server.js",
+  "authors": [
+    "Charlie Lynch"
+  ],
+  "license": "Apache 2.0",
+  "keywords": [
+    "MongoDB",
+    "Express",
+    "AngularJS",
+    "NodeJS"
+  ],
+  "homepage": "https://github.com/LynchyC/GW2_Calculator",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}

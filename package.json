@@ -1,14 +1,17 @@
 {
-  "name": "gw2_calculator",
-  "version": "1.0.0",
-  "description": "MEAN stack application that calculates your Black Lion Trading purchases",
-  "main": "server.js",
-  "scripts": {},
-  "author": "Charlie Lynch",
-  "license": "Apache 2.0",
-  "dependencies": {
-    "express": "^4.13.4",
-    "request": "^2.69.0",
-    "vash": "^0.11.1"
-  }
+    "name": "gw2_calculator",
+    "version": "1.0.0",
+    "description": "MEAN stack application that calculates your Black Lion Trading purchases",
+    "main": "server.js",
+    "scripts": {},
+    "author": "Charlie Lynch",
+    "license": "Apache 2.0",
+    "dependencies": {
+        "express": "^4.13.4",
+        "request": "^2.69.0",
+        "vash": "^0.11.1"
+    },
+    "devDependencies": {
+        "bower": "^1.7.7"
+    }
 }
