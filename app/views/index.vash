@@ -1,9 +1,48 @@
-@html.extend('layout',function(model){
+@html.extend('layout',function(model){ 
+
     @html.block("body",function(model){
-                
-        <div class="row">
-            <p>@model.text</p>
-        </div>
         
-    })
+        <div class="row">
+
+            <form action="/api/item" role="form" method="GET" class="form-inline">
+                <input type="text" name="itemID" class="form-control" placeholder="Item ID" />
+                <input type="submit" value="Get Item Data" class="btn btn-primary" />
+            </form>
+            
+            @if(model.error){
+                <div class="alert alert-danger">
+                    <strong>Error!</strong> @model.error
+                </div>
+            }
+        
+            @if(model.message){
+                <div class="alert alert-info" role="alert">
+                    <strong>Message:</strong> @model.message
+                </div>
+            }
+
+            @if(model.data){
+                <div>
+                    <h2>@model.data.name</h2>
+                    <img src="@model.data.img" />
+                </div>
+                
+                @if(model.data.buys.quantity != null && model.data.buys.quantity != null){
+                    <div>
+                        <h3>Buys</h3>
+                        <p><strong>Quantity:</strong> @model.data.buys.quantity</p>
+                        <p><strong>Price:</strong> @model.data.buys.price</p>
+                    </div>
+                    
+                    <div>
+                        <h3>Sells</h3>
+                        <p><strong>Quantity:</strong> @model.data.sells.quantity</p>
+                        <p><strong>Price:</strong> @model.data.sells.price</p>
+                    </div>
+                }
+            }
+
+        </div>
+
+    }) 
 })
