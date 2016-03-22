@@ -10,6 +10,9 @@ var app     = express();
 app.set('view engine',"vash");
 app.set('views', __dirname + '/app/views');
 
+// Set the public static resource folder
+app.use(express.static(__dirname + '/public'));
+
 // Set up port
 var port = process.env.PORT || 1337;
 
