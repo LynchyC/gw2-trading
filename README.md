@@ -16,6 +16,6 @@ NodeJS - https://nodejs.org/en/download/
 
 ## Bugs
 If you find any issues with the project, please let us know on our issues tracking page:
-https://github.com/LynchyC/GuildWarsCalculator/issues
+https://github.com/LynchyC/GW2_Calculator/issues
 
 **Please include as much information you can about the bug, including any reproduction steps, environment related details or log outputs**
