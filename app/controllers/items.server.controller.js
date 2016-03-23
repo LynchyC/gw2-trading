@@ -37,6 +37,12 @@ exports.getItemData = (req, res) => {
             });
 
             exports.getPriceData(res, id, itemData);
+        } else {
+            res.render('index', {
+                layout: false,
+                title: "Error has Occured",
+                error: err
+            });
         }
     });
 };
@@ -72,6 +78,12 @@ exports.getPriceData = (res, id, itemData) => {
                 layout: false,
                 title: "Your Searched Items",
                 data: itemData
+            });
+        } else {
+            res.render('index', {
+                layout: false,
+                title: "Error has Occured",
+                error: err
             });
         }
     });
