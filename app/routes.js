@@ -15,6 +15,6 @@ module.exports = function(app) {
     /**
      * Get item info from GW2 API
      */
-    app.route('/api/item')
+    app.route('/item')
         .get(itemCtrl.getItemData);
 };

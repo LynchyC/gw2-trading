@@ -4,19 +4,18 @@
 
 var request = require('request');
 
-String.prototype.isNumber = () => {
-    return /^\d+$/.test(this);
-};
 
 exports.getItemData = (req, res) => {
-    let id = req.query.itemID;
+    let id = parseInt(req.query.itemID);
 
-    if (!id.isNumber()) {
+    if (isNaN(id)) {
         res.render('index', {
             layout: false,
             title: "Error has occured",
             error: "Invalid ID. Please try again."
         });
+        
+        return;
     }
 
     let itemData = {
@@ -41,7 +40,8 @@ exports.getItemData = (req, res) => {
                 layout: false,
                 title: "Error has occured",
                 error: "ID does not exist. Please check your ID."
-            });
+            });            
+            
         } else if (!err && res.statusCode == 200) {
 
             itemData = Object.assign(itemData, {
@@ -55,7 +55,7 @@ exports.getItemData = (req, res) => {
                 layout: false,
                 title: "Error has Occured",
                 error: err
-            });
+            });            
         }
     });
 };
@@ -72,7 +72,7 @@ exports.getPriceData = (res, id, itemData) => {
                 title: "Your Item",
                 data: itemData,
                 message: "Current ID has no commerce data"
-            });
+            });            
 
         } else if (!err && res.statusCode == 200) {
 
@@ -97,7 +97,7 @@ exports.getPriceData = (res, id, itemData) => {
                 layout: false,
                 title: "Error has Occured",
                 error: err
-            });
+            });                        
         }
     });
 };
