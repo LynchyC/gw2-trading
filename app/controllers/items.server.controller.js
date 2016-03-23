@@ -4,8 +4,21 @@
 
 var request = require('request');
 
+String.prototype.isNumber = () => {
+    return /^\d+$/.test(this);
+};
+
 exports.getItemData = (req, res) => {
     let id = req.query.itemID;
+
+    if (!id.isNumber()) {
+        res.render('index', {
+            layout: false,
+            title: "Error has occured",
+            error: "Invalid ID. Please try again."
+        });
+    }
+
     let itemData = {
         name: '',
         img: '',
@@ -27,7 +40,7 @@ exports.getItemData = (req, res) => {
             res.render('index', {
                 layout: false,
                 title: "Error has occured",
-                error: "No such ID. Please try again"
+                error: "ID does not exist. Please check your ID."
             });
         } else if (!err && res.statusCode == 200) {
 
