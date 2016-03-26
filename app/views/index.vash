@@ -30,23 +30,19 @@
     @html.block("body",function(model){
         
         <div class="row">
-
+            
+            <h4>Aleady know the Item ID?</h4>
             <form action="/item" role="form" method="GET" class="form-inline">
                 <input id="idInput" type="text" name="itemID" class="form-control" placeholder="Item ID" />
                 <input type="submit" value="Get Item Data" class="btn btn-primary" />
             </form>
             
-            @if(model.error){
-                <div class="alert alert-danger">
-                    <strong>Error!</strong> @model.error
+            
+            @if(model.error) {
+                <div class= "@(model.cssClass)">
+                    <strong>@(model.cssClass == 'alert alert-danger' ? 'Error' : 'Message')!</strong> @model.error
                 </div>
-            }
-        
-            @if(model.message){
-                <div class="alert alert-info" role="alert">
-                    <strong>Message:</strong> @model.message
-                </div>
-            }
+            }        
 
             @if(model.data){
                 <div>
