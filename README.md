@@ -1,4 +1,4 @@
-# GW2_Calculator
+# GW2 Calculator
 MEAN stack application that calculates your Black Lion Trading purchases
 
 ## Requirements
