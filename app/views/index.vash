@@ -38,9 +38,9 @@
             </form>
             
             
-            @if(model.error) {
-                <div class= "@(model.cssClass)">
-                    <strong>@(model.cssClass == 'alert alert-danger' ? 'Error' : 'Message')!</strong> @model.error
+            @if(model.message) {
+                <div class= "@(model.error == true ? 'alert alert-danger' : 'alert alert-info')">
+                    <strong>@(model.error == true ? 'Error' : 'Message')!</strong> @model.message
                 </div>
             }        
 

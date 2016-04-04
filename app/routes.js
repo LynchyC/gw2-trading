@@ -15,6 +15,29 @@ module.exports = function(app) {
     /**
      * Get item info from GW2 API
      */
-    app.route('/item')
-        .get(itemCtrl.getItemData);
+    app.get('/item', (req, res) => {
+        let id = req.query.itemID;
+        itemCtrl.getItemData(id, function(err, results) {
+            if (err) {
+                res.status(400);
+                res.render('index', {
+                    error: true,
+                    title: err.title,
+                    message: err.message
+                });
+            } else if (results.buys.quantity == null) {
+                res.render('index', {
+                    error: false,
+                    title: "Your Searched Items",
+                    message: "No commerce data available for this ID",
+                    data: results
+                });
+            } else {
+                res.render('index', {
+                    title: 'Your Searched Items',
+                    data: results
+                });
+            }
+        });
+    });
 };
