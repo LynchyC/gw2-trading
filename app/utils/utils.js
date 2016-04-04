@@ -48,11 +48,11 @@ exports.gw2APIData = (apiSearch, id, next) => {
                 case 'items/':
                     errObject = {
                         title: 'Error has occured',
-                        message: 'Item id does not exist. Please check and try again.'
+                        message: 'Item ID does not exist. Please check and try again.'
                     };
                     break;
                 case 'commerce/prices/':
-                    errObject = false;
+                    errObject = true;
                     break;
                 default:
                     errObject = {
