@@ -54,13 +54,27 @@
                     <div>
                         <h3>Buys</h3>
                         <p><strong>Quantity:</strong> @model.data.buys.quantity</p>
-                        <p><strong>Price:</strong> @model.data.buys.price</p>
+                        <div> 
+                            <span><strong>Price:</strong></span>
+                            <ul class="coinDisplay">                                
+                                <li>@model.data.buys.price[0] <img src="/img/goldCoin.png" /></li>
+                                <li>@model.data.buys.price[1] <img src="/img/silverCoin.png" /></li>
+                                <li>@model.data.buys.price[2] <img src="/img/bronzeCoin.png" /></li>                                                                                                
+                            </ul>
+                        </div>
                     </div>
                     
                     <div>
                         <h3>Sells</h3>
                         <p><strong>Quantity:</strong> @model.data.sells.quantity</p>
-                        <p><strong>Price:</strong> @model.data.sells.price</p>
+                        <div> 
+                            <span><strong>Price:</strong></span>
+                            <ul class="coinDisplay">
+                                <li>@model.data.sells.price[0] <img src="/img/goldCoin.png" /></li>
+                                <li>@model.data.sells.price[1] <img src="/img/silverCoin.png" /></li>
+                                <li>@model.data.sells.price[2] <img src="/img/bronzeCoin.png" /></li>                                                                                                
+                            </ul>
+                        </div>
                     </div>
                 }
             }
