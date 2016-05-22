@@ -11,13 +11,11 @@ exports.calucatePriceRatio = (unit_price) => {
     let silver = 0;
     if (gold > 0) {
         silver = parseInt(unit_price % 10000);
-        if (silver >= 100) {
+        if (silver >= 100) 
             silver = parseInt(silver / 100);
-        }
-    } else {
+    } else 
         silver = parseInt(unit_price / 100);
-    }
-
+    
     let bronze = parseInt(unit_price % 100);
 
     let price = [gold, silver, bronze];

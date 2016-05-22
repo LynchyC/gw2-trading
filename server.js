@@ -23,4 +23,4 @@ require('./app/routes')(app);
 app.listen(port);
 
 // Shout out to the user
-console.log(`Magic is happening on port ${port}`);     
+console.log(`Magic is happening on port ${port}`);

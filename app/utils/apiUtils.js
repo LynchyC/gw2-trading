@@ -22,21 +22,21 @@ exports.gw2APIData = (apiSearch, id, next) => {
                     errObject = {
                         error: err,
                         title: "Error has Occured",
-                        message: 'Something went wrong retrieving the item data. Please try again.'
+                        itemMessage: 'Something went wrong retrieving the item data. Please try again.'
                     };
                     break;
                 case 'commerce/prices/':
                     errObject = {
                         error: err,
                         title: "Your Searched Items",
-                        message: "Something went wrong retrieving the items' price data. Please try again"
+                        commerceMessage: "Something went wrong retrieving the items' price data. Please try again"
                     };
                     break;
                 default:
                     errObject = {
                         error: err,
                         title: 'You are pretty amazing to end up here.',
-                        message: "How did you do this?"
+                        itemMessage: "How did you do this?"
                     };
                     break;
             }
@@ -47,17 +47,20 @@ exports.gw2APIData = (apiSearch, id, next) => {
             switch (apiSearch) {
                 case 'items/':
                     errObject = {
-                        title: 'Error has occured',
-                        message: 'Item ID does not exist. Please check and try again.'
+                        title: 'Error has Occured',
+                        itemMessage: 'Item ID does not exist. Please check and try again.'
                     };
                     break;
                 case 'commerce/prices/':
-                    errObject = true;
+                    errObject = {
+                        title: 'Your Items',
+                        commerceMessage: 'Commerce data is not available for this item'
+                    };
                     break;
                 default:
                     errObject = {
                         title: 'What?',
-                        message: 'Something weird has happened. Time to flee.'
+                        itemMessage: 'Something weird has happened. Time to flee.'
                     };
                     break;
             }
