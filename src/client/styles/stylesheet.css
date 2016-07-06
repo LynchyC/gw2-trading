@@ -1,0 +1,16 @@
+.alert {
+    margin-top: 10px;
+    width: 75%;
+}
+
+.coinDisplay {
+    list-style: none;
+    display: inline;
+    padding: 0px;
+}
+
+.coinDisplay li {
+    display: inline;
+}
+
+
