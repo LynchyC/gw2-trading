@@ -2,7 +2,7 @@
 
 'use strict';
 
-var itemCtrl = require('./controllers/items.server.controller');
+var itemCtrl = require('./../controllers/items.server.controller.js');
 
 module.exports = function(app) {
 

@@ -5,7 +5,7 @@
         <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
         <link href="/lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
         @html.block("head")
-        <link href="/css/stylesheet.css" rel="stylesheet" />
+        <link href="/styles/stylesheet.css" rel="stylesheet" />
     </head>
     <body>
  

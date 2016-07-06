@@ -5,8 +5,8 @@
 var chai = require('chai');
 var request = require('request');
 var expect = chai.expect;
-var itemCtrl = require('../app/controllers/items.server.controller');
-var apiUtils = require('./../app/utils/apiUtils.js');
+var itemCtrl = require('./../src/server/controllers/items.server.controller.js');
+var apiUtils = require('./../src/server/utils/apiUtils.js');
 
 chai.should();
 
@@ -66,7 +66,7 @@ describe('Function to retrieve GW2 API data', () => {
         });
     });
 
-    it('should return a error type error when retrieving PRICE data of an invalid ID', (done) => {
+    it('should return a error object when retrieving PRICE data of an invalid ID', (done) => {
         apiUtils.gw2APIData('commerce/prices/', 13982, (err, results) => {
             expect(err).to.exist;
             expect(err).to.be.a('object');

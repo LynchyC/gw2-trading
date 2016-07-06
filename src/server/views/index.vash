@@ -61,9 +61,9 @@
             <div>
                 <span><strong>Price:</strong></span>
                 <ul class="coinDisplay">
-                    <li>@model.data.buys.price[0] <img src="/img/goldCoin.png" /></li>
-                    <li>@model.data.buys.price[1] <img src="/img/silverCoin.png" /></li>
-                    <li>@model.data.buys.price[2] <img src="/img/bronzeCoin.png" /></li>
+                    <li>@model.data.buys.price[0] <img src="/images/goldCoin.png" /></li>
+                    <li>@model.data.buys.price[1] <img src="/images/silverCoin.png" /></li>
+                    <li>@model.data.buys.price[2] <img src="/images/bronzeCoin.png" /></li>    
                 </ul>
             </div>
         </div>
@@ -74,9 +74,9 @@
             <div>
                 <span><strong>Price:</strong></span>
                 <ul class="coinDisplay">
-                    <li>@model.data.sells.price[0] <img src="/img/goldCoin.png" /></li>
-                    <li>@model.data.sells.price[1] <img src="/img/silverCoin.png" /></li>
-                    <li>@model.data.sells.price[2] <img src="/img/bronzeCoin.png" /></li>
+                    <li>@model.data.sells.price[0] <img src="/images/goldCoin.png" /></li>
+                    <li>@model.data.sells.price[1] <img src="/images/silverCoin.png" /></li>
+                    <li>@model.data.sells.price[2] <img src="/images/bronzeCoin.png" /></li>
                 </ul>
             </div>
         </div>
