@@ -36,15 +36,15 @@
         </form>
 
 
-        @if(model.itemMessage) {
+        @if(model.serverMessage) {
         <div class="alert alert-danger">
-            <strong>Error!</strong> @model.itemMessage
+            <strong>Error!</strong> @model.serverMessage
         </div>
         } 
         
-        @if(model.commerceMessage) {
+        @if(model.data && (model.data.buys === undefined && model.data.sells === undefined)) {
         <div class="alert alert-info">
-            <strong>Message!</strong> @model.commerceMessage
+            <strong>Message!</strong> Commerce data is not available for this item.
         </div>
         } 
         
@@ -54,16 +54,16 @@
             <img src="@model.data.img" />
         </div>
 
-        @if(model.data.buys.quantity != null && model.data.buys.quantity != null){
+        @if(model.data.buys && model.data.sells){
         <div>
             <h3>Buys</h3>
             <p><strong>Quantity:</strong> @model.data.buys.quantity</p>
             <div>
                 <span><strong>Price:</strong></span>
                 <ul class="coinDisplay">
-                    <li>@model.data.buys.price[0] <img src="/images/goldCoin.png" /></li>
-                    <li>@model.data.buys.price[1] <img src="/images/silverCoin.png" /></li>
-                    <li>@model.data.buys.price[2] <img src="/images/bronzeCoin.png" /></li>    
+                    <li>@model.data.buys.unit_price[0] <img src="/images/goldCoin.png" /></li>
+                    <li>@model.data.buys.unit_price[1] <img src="/images/silverCoin.png" /></li>
+                    <li>@model.data.buys.unit_price[2] <img src="/images/bronzeCoin.png" /></li>    
                 </ul>
             </div>
         </div>
@@ -74,9 +74,9 @@
             <div>
                 <span><strong>Price:</strong></span>
                 <ul class="coinDisplay">
-                    <li>@model.data.sells.price[0] <img src="/images/goldCoin.png" /></li>
-                    <li>@model.data.sells.price[1] <img src="/images/silverCoin.png" /></li>
-                    <li>@model.data.sells.price[2] <img src="/images/bronzeCoin.png" /></li>
+                    <li>@model.data.sells.unit_price[0] <img src="/images/goldCoin.png" /></li>
+                    <li>@model.data.sells.unit_price[1] <img src="/images/silverCoin.png" /></li>
+                    <li>@model.data.sells.unit_price[2] <img src="/images/bronzeCoin.png" /></li>
                 </ul>
             </div>
         </div>

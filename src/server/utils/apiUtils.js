@@ -1,4 +1,4 @@
-// app/utils/utils.js
+// src/server/utils/apiUtils.js
 
 'use strict';
 
@@ -9,58 +9,30 @@ var request = require('request');
  * and retrieves the relevant item/commerce data.
  */
 
-exports.gw2APIData = (apiSearch, id, next) => {
+function gw2APIData(apiSearch, id, next) {
 
-    request(`https://api.guildwars2.com/v2/${apiSearch}/${id}`, (err, response, body) => {
-
-        let errObject;
+    request(`https://api.guildwars2.com/v2/${apiSearch}/${id}`, function(err, response, body) {
 
         if (err) {
-
-            switch (apiSearch) {
-                case 'items/':
-                    errObject = {
-                        error: err,
-                        title: "Error has Occured",
-                        itemMessage: 'Something went wrong retrieving the item data. Please try again.'
-                    };
-                    break;
-                case 'commerce/prices/':
-                    errObject = {
-                        error: err,
-                        title: "Your Searched Items",
-                        commerceMessage: "Something went wrong retrieving the items' price data. Please try again"
-                    };
-                    break;
-                default:
-                    errObject = {
-                        error: err,
-                        title: 'You are pretty amazing to end up here.',
-                        itemMessage: "How did you do this?"
-                    };
-                    break;
-            }
-
-            next(err, null);
+            next(err);
         } else if (JSON.parse(body).text == 'no such id') {
+
+            var errObject;
 
             switch (apiSearch) {
                 case 'items/':
                     errObject = {
                         title: 'Error has Occured',
-                        itemMessage: 'Item ID does not exist. Please check and try again.'
+                        serverMessage: 'Item ID does not exist. Please check and try again.'
                     };
                     break;
                 case 'commerce/prices/':
-                    errObject = {
-                        title: 'Your Items',
-                        commerceMessage: 'Commerce data is not available for this item'
-                    };
+                    errObject = null;
                     break;
                 default:
                     errObject = {
                         title: 'What?',
-                        itemMessage: 'Something weird has happened. Time to flee.'
+                        serverMessage: 'Something weird has happened. Time to flee.'
                     };
                     break;
             }
@@ -73,4 +45,6 @@ exports.gw2APIData = (apiSearch, id, next) => {
 
         }
     });
-};
+}
+
+exports.gw2APIData = gw2APIData;

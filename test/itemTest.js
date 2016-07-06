@@ -42,6 +42,7 @@ describe('Function to retrieve GW2 API data', () => {
 
     it('should succesfully retrive an ITEM data object for a valid ID ', (done) => {
         apiUtils.gw2APIData('items/', 136, (err, results) => {
+            expect(err).to.not.exist;
             expect(results).to.exist;
             expect(results).to.be.an('object');
             done();
@@ -66,11 +67,10 @@ describe('Function to retrieve GW2 API data', () => {
         });
     });
 
-    it('should return a error object when retrieving PRICE data of an invalid ID', (done) => {
+    it('should return null when retrieving PRICE data of an invalid ID', (done) => {
         apiUtils.gw2APIData('commerce/prices/', 13982, (err, results) => {
-            expect(err).to.exist;
-            expect(err).to.be.a('object');
-            expect(results).to.not.exist;
+            expect(err).to.be.null;
+            expect(results).to.be.null;
             done();
         });
     });

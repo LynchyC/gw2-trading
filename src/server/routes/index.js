@@ -1,4 +1,4 @@
-// app/routes.js
+// src/routes/index.js
 
 'use strict';
 
@@ -6,7 +6,7 @@ var itemCtrl = require('./../controllers/items.server.controller.js');
 
 module.exports = function(app) {
 
-    app.get('/', (req, res) => {
+    app.get('/', function(req, res) {
         res.render('index', {
             title: "GW2 Calculator",
         });
@@ -15,8 +15,9 @@ module.exports = function(app) {
     /**
      * Get item info from GW2 API
      */
-    app.get('/item', (req, res) => {
-        let id = parseInt(req.query.itemID);
+    app.get('/item', function(req, res) {
+
+        var id = parseInt(req.query.itemID);
 
         if (validateID(id)) {
             res.status(400);
@@ -29,10 +30,8 @@ module.exports = function(app) {
             itemCtrl.getItemData(id, function(err, results) {
                 if (err) {
                     res.render('index', {
-                        title: err.title || 'Error has Occured' ,
-                        itemMessage: err.itemMessage,
-                        commerceMessage: err.commerceMessage,
-                        data: null || results
+                        title: err.title || 'Error has Occured',
+                        serverMessage: err.serverMessage || 'Something has gone wrong whilst fulfilling your request.',
                     });
                 } else {
                     res.render('index', {
@@ -44,10 +43,7 @@ module.exports = function(app) {
         }
     });
 
-    /**
-     * Make sure that the ID is actually a number. Trust me ... I have tried passing text before.
-     */
-    function validateID(id) {
-        return isNaN(id);
+    function validateID(_id) {
+        return isNaN(_id);
     }
 };
