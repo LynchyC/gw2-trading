@@ -8,62 +8,80 @@ var apiUtils = require('./../utils/apiUtils.js');
  * Function to build the data object that is sent back to the user
  */
 
-function getItemData (id, next) {
+function getItemData(id, next) {
 
-    var itemData = {
-        _id: id,
-        name: '',
-        img: ''
-    };
+    var p = new Promise((resolve, reject) => {
 
-    apiUtils.gw2APIData('items/', itemData._id, function(err, results) {
-        if (err)
-            next(err);
-        else {
+        // Retrieves GW2 API item data
+        apiUtils.gw2APIData('items/', id)
+            .then((item) => {
 
-            itemData = Object.assign(itemData, {
-                name: results.name,
-                img: results.icon
+                // Only gather the properties needed
+                let itemData = {
+                    _id: id,
+                    name: item.name,
+                    img: item.icon
+                };
+
+                // On to the next one...
+                resolve(itemData);
+
+            }).catch((error) => {
+                handleError(error);
             });
+    });
 
-            getPriceData(itemData, function(err, results) {
-                if (err) {
-                    next(err, itemData);
+    p.then(function(item) {
+
+        // Retrieves GW2 API commerce data
+        apiUtils.gw2APIData('commerce/prices/', item._id)
+            .then(function(commerceResult) {
+
+                if (commerceResult === null) {
+                    next(null, item);
                 } else {
-                    // This is a completed itemData object 
-                    // (if the ID that is passed through has both valid item and commerce data from the GW2 API)
-                    next(null, results);
+
+                    // Converts the unit_price property from the API
+                    // into a Gold/Silver/Bronze ratio
+                    item.buys = convertPrice(commerceResult.buys);
+                    item.sells = convertPrice(commerceResult.sells);
+
+                    // Combines the item data and commerce data into one object.
+                    let gw2Result = Object.assign(commerceResult, item);
+                    next(null, gw2Result);
                 }
+
+            }).catch((err) => {
+                handleError(err);
             });
-        }
     });
+
+    p.catch((err) => {
+        handleError(err);
+    });
+
+    function handleError(error) {
+        next(error);
+    }
 }
 
-function getPriceData (item, next) {
+/**
+ * Converts the price returned from the commerce API and
+ * calculates the Gold/Silver/Bronze ratio for item
+ */
 
-    apiUtils.gw2APIData('commerce/prices/', item._id, function(err, results) {
-        if (err) {
-            next(err);
-        } else {
-
-            if (results === null) {
-                next(null, item);
-            } else {
-
-                item.buys = converPrice(results.buys);
-                item.sells = converPrice(results.sells);
-                next(null, item);
-            }
-        }
-    });
-}
-
-function converPrice(transaction) {
+function convertPrice(transaction) {
     var coinUtils = require('./../utils/coinUtils.js');
 
-    transaction.unit_price = coinUtils.calucatePriceRatio(transaction.unit_price);
-    return transaction;
+    
+    let itemPrice = {
+        quantity: transaction.quantity,
+        price: transaction.unit_price // jshint ignore:line
+    };
+
+    itemPrice.price = coinUtils.calucatePriceRatio(itemPrice.price);
+    return itemPrice;
 }
 
 exports.getItemData = getItemData;
-exports.getPriceData = getPriceData;
+// exports.getPriceData = getPriceData;

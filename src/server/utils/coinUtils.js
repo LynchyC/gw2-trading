@@ -6,24 +6,24 @@
  * Calculates the Gold/Silver/Bronze ratio for item
  */
 
-function calucatePriceRatio (unit_price) {
+function calucatePriceRatio (unitPrice) {
 
-    let gold = parseInt(unit_price / 10000);
+    let gold = parseInt(unitPrice / 10000);
     let silver = 0;
 
     if (gold > 0) {
-        silver = parseInt(unit_price % 10000);
+        silver = parseInt(unitPrice % 10000);
 
         if (silver >= 100) {
             silver = parseInt(silver / 100);
         }
 
     } else {
-        silver = parseInt(unit_price / 100);
+        silver = parseInt(unitPrice / 100);
     }
         
 
-    let bronze = parseInt(unit_price % 100);
+    let bronze = parseInt(unitPrice % 100);
     let price = [gold, silver, bronze];
 
     return price;
