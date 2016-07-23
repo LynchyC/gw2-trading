@@ -41,10 +41,8 @@ function getItemData(id, next) {
                     next(null, item);
                 } else {
 
-                    // Converts the unit_price property from the API
-                    // into a Gold/Silver/Bronze ratio
-                    item.buys = convertPrice(commerceResult.buys);
-                    item.sells = convertPrice(commerceResult.sells);
+                    item.buys = commerceResult.buys;
+                    item.sells = commerceResult.sells;
 
                     // Combines the item data and commerce data into one object.
                     let gw2Result = Object.assign(commerceResult, item);
@@ -63,24 +61,6 @@ function getItemData(id, next) {
     function handleError(error) {
         next(error);
     }
-}
-
-/**
- * Converts the price returned from the commerce API and
- * calculates the Gold/Silver/Bronze ratio for item
- */
-
-function convertPrice(transaction) {
-    var coinUtils = require('./../utils/coinUtils.js');
-
-    
-    let itemPrice = {
-        quantity: transaction.quantity,
-        price: transaction.unit_price // jshint ignore:line
-    };
-
-    itemPrice.price = coinUtils.calucatePriceRatio(itemPrice.price);
-    return itemPrice;
 }
 
 exports.getItemData = getItemData;

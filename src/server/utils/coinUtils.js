@@ -6,7 +6,7 @@
  * Calculates the Gold/Silver/Bronze ratio for item
  */
 
-function calucatePriceRatio (unitPrice) {
+function calculatePriceRatio (unitPrice) {
 
     let gold = parseInt(unitPrice / 10000);
     let silver = 0;
@@ -29,4 +29,4 @@ function calucatePriceRatio (unitPrice) {
     return price;
 }
 
-exports.calucatePriceRatio = calucatePriceRatio;
+exports.calculatePriceRatio = calculatePriceRatio;

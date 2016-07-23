@@ -41,6 +41,7 @@
     "laxcomma": false,
     "loopfunc": true,
     "maxerr": 50,
+    "mocha": true,
     "moz": false,
     "multistr": false,
     "notypeof": false,

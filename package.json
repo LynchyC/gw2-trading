@@ -4,12 +4,12 @@
   "description": "MEAN stack application that calculates your Black Lion Trading purchases",
   "main": "server.js",
   "scripts": {
-    "test": "mocha",
     "start": "node src/server/app.js"
   },
   "author": "Charlie Lynch",
   "license": "Apache 2.0",
   "dependencies": {
+    "async": "^2.0.0-rc.6",
     "axios": "^0.12.0",
     "chai": "^3.5.0",
     "express": "^4.13.4",
