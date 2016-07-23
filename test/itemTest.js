@@ -1,9 +1,10 @@
 // ./test/itemTest.js
+/*jshint expr: true*/
 
 'use strict';
 
 var chai = require('chai');
-var request = require('request');
+var axios = require('axios');
 var expect = chai.expect;
 var itemCtrl = require('./../src/server/controllers/items.server.controller.js');
 var apiUtils = require('./../src/server/utils/apiUtils.js');
@@ -22,56 +23,71 @@ describe('Item Search API', () => {
 
         url = `${url}136`;
 
-        request(url, (err, res, body) => {
-            expect(res.statusCode).to.equal(200);
-        });
+        axios.get(url)
+            .then((response) => {
+                expect(response.statusCode).to.equal(200);
+            });
 
         done();
     });
 
     it('should return a status code of 400 when itemID is blank', (done) => {
-        request(url, (err, res, body) => {
-            expect(res.statusCode).to.equal(400);
-        });
+        axios.get(url)
+            .then((response) => {
+                expect(response.statusCode).to.equal(400);
+            });
 
         done();
     });
 });
 
-describe('Function to retrieve GW2 API data', () => {
+describe('Function to retrieve GW2 API ITEM data', () => {
 
     it('should succesfully retrive an ITEM data object for a valid ID ', (done) => {
-        apiUtils.gw2APIData('items/', 136, (err, results) => {
-            expect(err).to.not.exist;
-            expect(results).to.exist;
-            expect(results).to.be.an('object');
-            done();
-        });
-    });
+        apiUtils.gw2APIData('items/', 136)
+            .then((response) => {
+                expect(response).to.be.an('object');
+                expect(response).to.have.property('icon');
+            });
 
-    it('should succesfully retrive a PRICE data object for a valid ID ', (done) => {
-        apiUtils.gw2APIData('commerce/prices/', 136, (err, results) => {
-            expect(err).to.not.exist;
-            expect(results).to.exist;
-            expect(results).to.be.an('object');
-            done();
-        });
+        done();
     });
 
     it('should return a error object with no data when retrieving ITEM data of an invalid ID', (done) => {
-        apiUtils.gw2APIData('items/', 19982, (err, results) => {
-            expect(err).to.exist;
-            expect(err).to.be.a('object');
-            expect(results).to.not.exist;
-            done();
-        });
+        apiUtils.gw2APIData('items/', 19982)
+            .then((response) => {
+                expect(response).to.not.exist;
+            }).catch((error) => {
+                expect(error).to.exist;
+                expect(error.title).to.equal('Item ID does not exist. Please check and try again.');
+            });
+
+        done();
+    });
+
+});
+
+describe('Function to retrieve GW2 API COMMERCE data', () => {
+
+    it('should succesfully retrive a PRICE data object for a valid ID ', (done) => {
+        apiUtils.gw2APIData('commerce/prices/', 136)
+            .then((response) => {
+                expect(response).to.be.an('object');
+                expect(response).to.have.property('buys');
+
+            });
+
+        done();
     });
 
     it('should return null when retrieving PRICE data of an invalid ID', (done) => {
-        apiUtils.gw2APIData('commerce/prices/', 13982, (err, results) => {
-            expect(err).to.be.null;
-            expect(results).to.be.null;
-            done();
+        apiUtils.gw2APIData('commerce/prices/', 13982).then((response) => {
+            expect(response).to.be.null;
+        }).catch((error) => {
+            expect(error).to.not.exist;
         });
+
+        done();
     });
+
 });
