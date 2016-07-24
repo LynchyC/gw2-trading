@@ -1,4 +1,5 @@
 // src/server/controllers/recipe.server.controller
+/* jshint -W106 */ 
 
 'use strict';
 
@@ -46,6 +47,7 @@ function getRecipeOutputs(id) {
                 }
             })
             .catch((error) => reject(error));
+
     });
 }
 

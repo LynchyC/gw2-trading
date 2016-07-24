@@ -24,7 +24,13 @@ module.exports = function() {
             json: require('./bower.json'),
             directory: client + 'lib/',
             ignorePath: '/client'
-        }
+        },
+
+        /**
+         * Node Settings
+         */
+        defaultPort: 1337,
+        nodeServer: server + 'app.js'
 
     };
 
