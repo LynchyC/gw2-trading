@@ -17,6 +17,19 @@
     "vash": "^0.11.1"
   },
   "devDependencies": {
-    "bower": "^1.7.7"
+    "bower": "^1.7.7",
+    "gulp": "^3.9.1",
+    "gulp-if": "^2.0.1",
+    "gulp-inject": "^4.1.0",
+    "gulp-jscs": "^4.0.0",
+    "gulp-jshint": "^2.0.1",
+    "gulp-load-plugins": "^1.2.4",
+    "gulp-nodemon": "^2.1.0",
+    "gulp-print": "^2.0.1",
+    "gulp-util": "^3.0.7",
+    "jshint": "^2.9.2",
+    "jshint-stylish": "^2.2.0",
+    "wiredep": "^4.0.0",
+    "yargs": "^4.8.1"
   }
 }
