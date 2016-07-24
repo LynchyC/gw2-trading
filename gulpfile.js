@@ -2,15 +2,15 @@ const gulp = require('gulp');
 const args = require('yargs').argv;
 const config = require('./gulp.config')();
 const $ = require('gulp-load-plugins')({
-    lazy:true
+    lazy: true
 });
 
-gulp.task('vet',function () {
+gulp.task('vet', function() {
     log('Analyzing source with JSHint and JSCS');
 
     return gulp
         .src(config.alljs)
-        .pipe($.if(args.verbose,$.print()))
+        .pipe($.if(args.verbose, $.print()))
         .pipe($.jscs())
         .pipe($.jshint())
         .pipe($.jshint.reporter('jshint-stylish', {
@@ -19,12 +19,34 @@ gulp.task('vet',function () {
         .pipe($.jshint.reporter('fail'));
 });
 
+gulp.task('wiredep', function() {
+    log('Wire up the bower css, js into the layout');
+    const options = config.getWiredepDefaultOptions();
+    const wiredep = require('wiredep').stream;
+
+    return gulp
+        .src(config.index)
+        .pipe(wiredep(options))
+        .pipe(gulp.dest(config.views));
+});
+
+gulp.task('inject', ['wiredep'], function() {
+    log('Wire up the app css into the layout and call wiredep');
+
+    return gulp
+        .src(config.index)
+        .pipe($.inject(gulp.src(config.css), {
+            ignorePath: '/src/client'
+        }))
+        .pipe(gulp.dest(config.views));
+});
+
 /////////////////////////////////////////////////////////
 
 function log(msg) {
-    if(typeof(msg) === 'object') {
-        for(var item in msg) {
-            if(msg.hasOwnProperty(item)) {
+    if (typeof(msg) === 'object') {
+        for (var item in msg) {
+            if (msg.hasOwnProperty(item)) {
                 $.util.log($.util.colors.blue(msg[item]));
             }
         }

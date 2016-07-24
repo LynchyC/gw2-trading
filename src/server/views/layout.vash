@@ -2,10 +2,16 @@
 <html>
     <head>
         <title>@model.title</title>
-        <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-        <link href="/lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" />
+
+        <!-- bower:css -->
+        <link rel="stylesheet" href="../../lib/bootstrap/dist/css/bootstrap.css" />
+        <!-- endbower -->
+
+        <!-- inject:css -->
+        <link rel="stylesheet" href="/styles/stylesheet.css">
+        <!-- endinject -->
         @html.block("head")
-        <link href="/styles/stylesheet.css" rel="stylesheet" />
+
     </head>
     <body>
  
@@ -19,9 +25,12 @@
         <footer class="container">
             <p>GW2 Calculator</p>
         </footer>
-                
-        <script src="/lib/jquery/dist/jquery.min.js"></script>
-        <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>   
+
+        <!-- bower:js -->
+        <script src="../../lib/jquery/dist/jquery.js"></script>
+        <script src="../../lib/bootstrap/dist/js/bootstrap.js"></script>
+        <!-- endbower -->
+
         @html.block("scripts")
     </body>
 </html>
