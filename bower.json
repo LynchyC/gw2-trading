@@ -19,19 +19,27 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "public/lib",
+    "src/client/lib",
     "test",
     "tests"
   ],
   "dependencies": {
     "bootstrap": "^3.3.6",
-    "jquery": "^3.1.0"
+    "jquery": "^3.1.0",
+    "angular": "~1.5.8",
+    "angular-bootstrap": "~2.0.0",
+    "angular-route": "^1.5.8"
   },
   "overrides": {
     "bootstrap": {
       "main": [
         "dist/css/bootstrap.css",
         "dist/js/bootstrap.js"
+      ]
+    },
+    "angular-bootstrap": {
+      "main": [
+        "ui-bootstrap.js"
       ]
     }
   }
