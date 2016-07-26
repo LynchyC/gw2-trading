@@ -23,13 +23,16 @@ gulp.task('vet', function() {
 });
 
 gulp.task('wiredep', function() {
-    log('Wire up the bower css, js into the layout');
+    log('Wire up the bower css, js and custom js into the layout');
     const options = config.getWiredepDefaultOptions();
     const wiredep = require('wiredep').stream;
 
     return gulp
         .src(config.index)
         .pipe(wiredep(options))
+        .pipe($.inject(gulp.src(config.js), {
+            ignorePath: 'src/client'
+        }))
         .pipe(gulp.dest(config.views));
 });
 
@@ -39,7 +42,7 @@ gulp.task('inject', ['wiredep'], function() {
     return gulp
         .src(config.index)
         .pipe($.inject(gulp.src(config.css), {
-            ignorePath: '/src/client'
+            ignorePath: 'src/client'
         }))
         .pipe(gulp.dest(config.views));
 });
@@ -54,7 +57,7 @@ gulp.task('serve-dev', ['inject'], function() {
             'PORT': port,
             'NODE_ENV': isDev ? 'dev' : 'build'
         },
-        watch: [config.server]
+        watch: [config.server, config.clientApp]
     };
 
     return $.nodemon(nodeOptions)

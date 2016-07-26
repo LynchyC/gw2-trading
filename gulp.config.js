@@ -1,5 +1,6 @@
 module.exports = function() {
     var client = './src/client/';
+    var clientApp = client + 'js/';
     var server = './src/server/';
     var config = {
 
@@ -9,12 +10,16 @@ module.exports = function() {
 
         // all the .js files that need to be vetted
         alljs: [
+            '.src/client/js/**/*.js',
             './src/server/**/*.js',
             './*.js'
         ],
         client: client,
         css: client + 'styles/stylesheet.css',
         index: server + 'views/layout.vash',
+        js: [
+            clientApp + '**/*.js'
+        ],
         views: server + 'views/',
 
         /**

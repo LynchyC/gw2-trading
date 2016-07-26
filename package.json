@@ -4,7 +4,8 @@
   "description": "MEAN stack application that calculates your Black Lion Trading purchases",
   "main": "server.js",
   "scripts": {
-    "start": "node src/server/app.js"
+    "start": "node src/server/app.js",
+    "postinstall": "bower update"
   },
   "author": "Charlie Lynch",
   "license": "Apache 2.0",
