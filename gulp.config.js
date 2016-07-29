@@ -23,6 +23,11 @@ module.exports = function() {
         views: server + 'views/',
 
         /**
+         * browser sync
+         */
+        browserReloadDelay: 1000,
+
+        /**
          * Bower and NPM locations
          */
         bower: {
