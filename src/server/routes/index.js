@@ -7,15 +7,14 @@ const recipeCtrl = require('./../controllers/recipe.server.controller.js');
 
 module.exports = function(app) {
 
-    app.get('/', function(req, res) {
-        res.render('index', {
-            title: 'GW2 Calculator',
-        });
+    app.route('/').get(function(req, res) {
+        res.render('index', {});
     });
 
     /**
      * Get item info from GW2 API
      */
+    
     app.get('/item', function(req, res) {
 
         var id = parseInt(req.query.itemID);
@@ -56,6 +55,7 @@ module.exports = function(app) {
             });
         }
     });
+    
 
     function validateID(_id) {
         return isNaN(_id);

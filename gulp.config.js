@@ -16,7 +16,7 @@ module.exports = function() {
         ],
         client: client,
         css: client + 'styles/stylesheet.css',
-        index: server + 'views/layout.vash',
+        index: server + 'views/layout.html',
         js: [
             clientApp + '**/*.js'
         ],

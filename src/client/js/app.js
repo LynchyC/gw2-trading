@@ -1,6 +1,9 @@
 // src/client/js/app.js
 
-angular.module('gw2Calc', [
-    'ui.bootstrap',
-    'ngRoute'
-]);
+(function() {
+    angular.module('gw2Calc', [
+        'ui.bootstrap',
+        'ui.router',
+        'ngResource'
+    ]);
+}());

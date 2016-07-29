@@ -3,10 +3,13 @@
 // Module Configuration 
 var express = require('express');
 var app     = express();
+var swig    = require('swig');
 
 // Set up view engine
-app.set('view engine','vash');
-app.set('views', __dirname + '/views/');
+app.engine('html', swig.renderFile);
+
+app.set('view engine','html');
+app.set('views', __dirname + '/views');
 
 // Set the public static resource folder
 app.use(express.static(__dirname + '/../client/'));
