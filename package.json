@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "bower": "^1.7.7",
+    "browser-sync": "^2.13.0",
     "gulp": "^3.9.1",
     "gulp-if": "^2.0.1",
     "gulp-inject": "^4.1.0",
