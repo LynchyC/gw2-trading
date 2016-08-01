@@ -8,6 +8,15 @@ angular.module('gw2Calc')
                 url: '/',
                 controller: 'HomeController',
                 templateUrl: 'js/views/home.html'
+            })
+
+            .state('home.search', {
+                url: '^/search/:itemID',
+                controller: 'ItemController',
+                templateUrl: 'js/views/search.html',
+                params: {
+                    itemID: null
+                }
             });
 
         $locationProvider.html5Mode({

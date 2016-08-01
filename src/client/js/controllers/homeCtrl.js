@@ -1,27 +1,16 @@
-(function() {
-    'use strict';
+'use strict';
 
-    angular.module('gw2Calc').controller('HomeController', HomeController);
+angular.module('gw2Calc').controller('HomeController', ['$scope', '$state',
 
-    HomeController.$inject = ['$scope','$timeout'];
+    function($scope, $state) {
 
-    function HomeController($scope,$timeout) {
-
-        $scope.item = {
-            ID: null,
-            Name: 'TODO'
-        };
-
-        $scope.searchingForItem = false;
+        $scope.itemID = null;
 
         $scope.getItem = function() {
-            $scope.searchingForItem = true;
-
-            $timeout(function() {
-                $scope.searchingForItem = false;
-            }, 5000);
+            $state.go('home.search', {
+                itemID: $scope.item.ID
+            });
         };
 
     }
-
-}());
+]);

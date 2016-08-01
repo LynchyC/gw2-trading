@@ -6,9 +6,7 @@
             <input id="idInput" type="number" ng-model="item.ID" name="itemID" class="form-control" placeholder="Item ID" required/>
             <input type="submit" value="Get Item Data" class="btn btn-primary" ng-disabled="itemForm.$invalid || itemForm.input.$error.number" />
         </form>
-
-        <div ng-show="searchingForItem">
-            <p>TODO: Create Angular service to connect to backend!</p>
-        </div>
     </div>
+
+    <div ui-view></div>
 </section>
