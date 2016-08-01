@@ -17,7 +17,7 @@ module.exports = function(app) {
 
     app.route('/api/item/:itemID').get(function(req, res) {
 
-        var id = parseInt(req.query.itemID);
+        var id = parseInt(req.params.itemID);
 
         if (isNaN(id)) {
             res.status(400).send('Invalid ID. Please try again.');

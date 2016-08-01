@@ -27,7 +27,12 @@ function getRecipeData(id, next) {
         .catch((error) => handleError(error));
 
     function handleError(error) {
-        next(error);
+        if (error.serverMessage) {
+            next(null);
+        } else {
+            next(error);
+        }
+
     }
 }
 

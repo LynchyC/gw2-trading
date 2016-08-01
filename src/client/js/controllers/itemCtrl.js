@@ -1,25 +1,48 @@
 'use strict';
 
-angular.module('gw2Calc').controller('ItemController', ['$scope', '$stateParams', '$timeout',
+angular.module('gw2Calc').controller('ItemController', ['$scope', '$stateParams', 'searchAPI',
 
-    function($scope, $stateParams, $timeout) {
+    function($scope, $stateParams, searchAPI) {
 
         $scope.item = {
             ID: null,
-            Name: 'TODO'
+            data: null,
+            recipeData: null
         };
 
-        $scope.searchingForItem = false;
+        $scope.searchError = {
+            message: null,
+            noCommerce: false,
+            noRecipe: false
+        };
+
+        $scope.searchingForItem = true;
 
         if ($stateParams.itemID) {
             $scope.item.ID = $stateParams.itemID;
-            $scope.searchingForItem = true;
-
-            $timeout(function() {
-                $scope.searchingForItem = false;
-            }, 5000);
-
         }
+        var searchCallback = searchAPI.query({
+                itemID: $scope.item.ID
+            },
+            // On Sucess
+            function(results) {
+                $scope.searchingForItem = false;
+                if (!results.data.buys && !results.data.sells) {
+                    $scope.searchError.noCommerce = true;
+                }
+
+                if(!results.recipes) {
+                    $scope.searchError.noRecipe = true;
+                }
+
+                $scope.item.data = results.data;
+                $scope.item.recipeData = results.recipes;
+            }).$promise.catch(
+            // On Failure
+            function(err) {
+                $scope.searchingForItem = false;
+                $scope.searchError.message= err.data;
+            });
 
     }
 ]);

@@ -40,7 +40,7 @@
     },
     "angular-bootstrap": {
       "main": [
-        "ui-bootstrap.js"
+        "ui-bootstrap-tpls.min.js"
       ]
     }
   }
