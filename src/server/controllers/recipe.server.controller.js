@@ -1,5 +1,5 @@
 // src/server/controllers/recipe.server.controller
-/* jshint -W106 */ 
+/* jshint -W106 */
 
 'use strict';
 
@@ -40,8 +40,10 @@ function getRecipeOutputs(id) {
     return new Promise((resolve, reject) => {
         apiUtils.gw2APIData('recipes/search?output=', id)
             .then((returnIDs) => {
-                if (returnIDs === []) {
-                    reject();
+                if (returnIDs.length === 0) {
+                    reject({
+                        serverMessage: 'No recipe data avaliable'
+                    });
                 } else {
                     resolve(returnIDs);
                 }

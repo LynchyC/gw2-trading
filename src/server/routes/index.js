@@ -14,25 +14,18 @@ module.exports = function(app) {
     /**
      * Get item info from GW2 API
      */
-    
-    app.get('/item', function(req, res) {
+
+    app.route('/api/item/:itemID').get(function(req, res) {
 
         var id = parseInt(req.query.itemID);
 
-        if (validateID(id)) {
-            res.status(400);
-            res.render('index', {
-                title: 'Error has Occured',
-                itemMessage: 'Invalid ID. Please try again.'
-            });
-
+        if (isNaN(id)) {
+            res.status(400).send('Invalid ID. Please try again.');
         } else {
             itemCtrl.getItemData(id, function(err, results) {
                 if (err) {
-                    res.render('index', {
-                        title: err.title || 'Error has Occured',
-                        serverMessage: err.serverMessage || 'Something has gone wrong whilst fulfilling your request.',
-                    });
+                    res.status(400)
+                        .send(err.serverMessage || 'Something has gone wrong whilst fulfilling your request.');
                 } else {
 
                     if (results.buys !== undefined) {
@@ -42,12 +35,12 @@ module.exports = function(app) {
 
                     recipeCtrl.getRecipeData(id, function(err, recipeResults) {
                         if (err) {
-                            console.log('Coming from routes index file: ' + err);
+                            res.status(400)
+                                .send(err.serverMessage || 'Something has gone wrong whilst fulfilling your request.');
                         } else {
-                            res.render('index', {
-                                title: 'Your Searched Items',
-                                data: results,
-                                recipes: recipeResults[0]
+                            res.json({
+                                data: results || null,
+                                recipes: recipeResults || null
                             });
                         }
                     });
@@ -55,11 +48,6 @@ module.exports = function(app) {
             });
         }
     });
-    
-
-    function validateID(_id) {
-        return isNaN(_id);
-    }
 };
 
 /**
@@ -76,6 +64,6 @@ function convertPrice(transaction) {
         price: transaction.unit_price // jshint ignore:line
     };
 
-    itemPrice.price = coinUtils.calucatePriceRatio(itemPrice.price);
+    itemPrice.price = coinUtils.calculatePriceRatio(itemPrice.price);
     return itemPrice;
 }
