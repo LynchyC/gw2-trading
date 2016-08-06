@@ -1,25 +1,25 @@
+'use strict';
+
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://localhost:27017/gw2Calc';
 let db = null;
 
-function getDB(next) {
-    if (!db) {
-        // connect to the database
+function getDB() {
+
+    return new Promise((resolve, reject) => {
         MongoClient.connect(url, (err, database) => {
             if (err) {
-                next('Error connecting to database', null);
+                reject('Error connecting to database');
             } else {
                 db = {
                     db: database,
-                    items: db.collection('items')
+                    items: database.collection('items')
                 };
 
-                next(null, db);
+                resolve(db);
             }
         });
-    } else {
-        next(null, db);
-    }
+    });
 }
 
 exports.getDB = getDB;

@@ -13,27 +13,33 @@ let recipeObject = [];
  * Essentially builds the recipe object that is then pushed back 
  * to the client
  */
-function getRecipeData(id, next) {
+function getRecipeData(id) {
 
-    getRecipeOutputs(id)
-        .then((outputIDs) => {
-            return recipeAPIData(outputIDs);
-        })
-        .then((recipeApiResult) => {
-            recipeObject = recipeApiResult;
-            return getIngredientItemData(recipeObject);
-        })
-        .then(() => next(null, recipeObject))
-        .catch((error) => handleError(error));
+    return new Promise((resolve, reject) => {
 
-    function handleError(error) {
-        if (error.serverMessage) {
-            next(null);
-        } else {
-            next(error);
-        }
-
-    }
+        getRecipeOutputs(id)
+            .then(outputIDs => {
+                if (outputIDs) {
+                    return recipeAPIData(outputIDs);
+                } else {
+                    resolve(null);
+                }
+            })
+            .then(recipeApiResult => {
+                recipeObject = recipeApiResult;
+                return getIngredientItemData(recipeObject);
+            })
+            .then(result => {
+                resolve(recipeObject);
+            })
+            .catch((error) => {
+                if (error.serverMessage) {
+                    reject(null);
+                } else {
+                    reject(error);
+                }
+            });
+    });
 }
 
 /**
@@ -46,9 +52,7 @@ function getRecipeOutputs(id) {
         apiUtils.gw2APIData('recipes/search?output=', id)
             .then((returnIDs) => {
                 if (returnIDs.length === 0) {
-                    reject({
-                        serverMessage: 'No recipe data avaliable'
-                    });
+                    resolve(null);
                 } else {
                     resolve(returnIDs);
                 }
@@ -107,24 +111,25 @@ function getIngredientItemData(recipes) {
 
             async.forEachOf(r.ingredients, function(i, index, callbk) {
 
-                itemCtrl.getItemData(i.item_id, function(error, results) {
-                    if (error) {
-                        callbk(error);
-                    } else {
+                itemCtrl.getItemData(i.item_id)
+                    .then(itemData => {
 
-                        if (results.buys !== undefined) {
-                            let total = (i.count * results.buys.unit_price);
+
+                        if (itemData.buys !== undefined) {
+                            let total = (i.count * itemData.buys.unit_price);
                             r.recipeTotal = r.recipeTotal + total;
-                            results.ingredientTotal = coinUtil.calculatePriceRatio(total);
-                            results.buys.price = coinUtil.calculatePriceRatio(results.buys.unit_price);
-                            results.sells.price = coinUtil.calculatePriceRatio(results.sells.unit_price);
+                            itemData.ingredientTotal = coinUtil.calculatePriceRatio(total);
+                            itemData.buys.price = coinUtil.calculatePriceRatio(itemData.buys.unit_price);
+                            itemData.sells.price = coinUtil.calculatePriceRatio(itemData.sells.unit_price);
                         }
 
-                        Object.assign(r.ingredients[index], results);
+                        Object.assign(r.ingredients[index], itemData);
                         delete r.ingredients[index]._id;
                         callbk();
-                    }
-                });
+                    })
+                    .catch(function(error) {
+                        callbk(error);
+                    });
 
             }, function(err) {
                 if (err) {
@@ -139,7 +144,7 @@ function getIngredientItemData(recipes) {
             if (err) {
                 reject(err);
             } else {
-                resolve();
+                resolve(recipes);
             }
         });
     });

@@ -8,17 +8,35 @@ var apiUtils = require('./../utils/apiUtils.js');
  * Function to build the data object that is sent back to the user
  */
 
-function getItemData(id, next) {
+function getItemData(id) {
 
-    var p = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
+        itemAPISearch(id)
+            .then(itemData => {
+                return commerceAPISearch(itemData);
+            })
+            .then(commerceData => {
+                resolve(commerceData);
+            })
+            .catch(error => {
+                console.log(error);
+                reject(error);
+            });
+    });
+}
+
+function itemAPISearch(id) {
+
+    return new Promise((resolve, reject) => {
         // Retrieves GW2 API item data
         apiUtils.gw2APIData('items/', id)
             .then((item) => {
 
                 // Only gather the properties needed
                 let itemData = {
-                    _id: id,
+                    itemID: id,
+                    dateCreated: new Date(),
                     name: item.name,
                     img: item.icon
                 };
@@ -26,19 +44,19 @@ function getItemData(id, next) {
                 // On to the next one...
                 resolve(itemData);
 
-            }).catch((error) => {
-                handleError(error);
-            });
+            }).catch((error) => reject(error));
     });
+}
 
-    p.then(function(item) {
+function commerceAPISearch(item) {
+    return new Promise((resolve, reject) => {
 
         // Retrieves GW2 API commerce data
-        apiUtils.gw2APIData('commerce/prices/', item._id)
+        apiUtils.gw2APIData('commerce/prices/', item.itemID)
             .then(function(commerceResult) {
 
                 if (commerceResult === null) {
-                    next(null, item);
+                    resolve(item);
                 } else {
 
                     item.buys = commerceResult.buys;
@@ -46,22 +64,11 @@ function getItemData(id, next) {
 
                     // Combines the item data and commerce data into one object.
                     let gw2Result = Object.assign(commerceResult, item);
-                    next(null, gw2Result);
+                    delete gw2Result.id;
+                    resolve(gw2Result);
                 }
-
-            }).catch((err) => {
-                handleError(err);
-            });
+            }).catch(error => reject(error));
     });
-
-    p.catch((err) => {
-        handleError(err);
-    });
-
-    function handleError(error) {
-        next(error);
-    }
 }
 
 exports.getItemData = getItemData;
-// exports.getPriceData = getPriceData;

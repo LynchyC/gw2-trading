@@ -22,30 +22,29 @@ module.exports = function(app) {
         if (isNaN(id)) {
             res.status(400).send('Invalid ID. Please try again.');
         } else {
-            itemCtrl.getItemData(id, function(err, results) {
-                if (err) {
-                    res.status(400)
-                        .send(err.serverMessage || 'Something has gone wrong whilst fulfilling your request.');
-                } else {
 
-                    if (results.buys !== undefined) {
-                        results.buys = convertPrice(results.buys);
-                        results.sells = convertPrice(results.sells);
+            itemCtrl.getItemData(id)
+                .then((itemData) => {
+                    
+                    if (itemData.buys !== undefined) {
+                        itemData.buys = convertPrice(itemData.buys);
+                        itemData.sells = convertPrice(itemData.sells);
                     }
 
-                    recipeCtrl.getRecipeData(id, function(err, recipeResults) {
-                        if (err) {
-                            res.status(400)
-                                .send(err.serverMessage || 'Something has gone wrong whilst fulfilling your request.');
-                        } else {
+                    recipeCtrl.getRecipeData(id)
+                        .then((recipeData) => {
                             res.json({
-                                data: results || null,
-                                recipes: recipeResults || null
+                                data: itemData || null,
+                                recipes: recipeData || null
                             });
-                        }
-                    });
-                }
-            });
+                        });
+
+                })
+                .catch(error => {
+                    res.status(400)
+                        .send(error.serverMessage || 'Something has gone wrong whilst fulfilling your request.');
+                });
+
         }
     });
 };
