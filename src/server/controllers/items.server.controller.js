@@ -2,7 +2,8 @@
 
 'use strict';
 
-var apiUtils = require('./../utils/apiUtils.js');
+const apiUtils = require('./../utils/apiUtils.js');
+const db = require('./../db/index.js');
 
 /**
  * Function to build the data object that is sent back to the user
@@ -10,17 +11,27 @@ var apiUtils = require('./../utils/apiUtils.js');
 
 function getItemData(id) {
 
+
     return new Promise((resolve, reject) => {
 
-        itemAPISearch(id)
-            .then(itemData => {
-                return commerceAPISearch(itemData);
+        db.getItemByID(id)
+            .then(dbResult => {
+                if (dbResult) {
+                    return dbResult;
+                } else {
+                    return itemAPISearch(id)
+                        .then(itemData => {
+                            return commerceAPISearch(itemData);
+                        })
+                        .then(commerceData => {
+                            return db.addItem(commerceData);
+                        });
+                }
             })
-            .then(commerceData => {
-                resolve(commerceData);
+            .then(dbResult => {
+                resolve(dbResult);
             })
             .catch(error => {
-                console.log(error);
                 reject(error);
             });
     });

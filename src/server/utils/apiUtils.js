@@ -24,7 +24,6 @@ function gw2APIData(apiSearch, id) {
                     switch (apiSearch) {
                         case 'items/':
                             apiObject = {
-                                title: 'Error has Occured',
                                 serverMessage: 'Item ID does not exist. Please check and try again.'
                             };
                             reject(apiObject);
@@ -35,7 +34,6 @@ function gw2APIData(apiSearch, id) {
                             break;
                         default:
                             apiObject = {
-                                title: 'What?',
                                 serverMessage: 'Something weird has happened. Time to flee.'
                             };
                             reject(apiObject);

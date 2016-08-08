@@ -25,19 +25,29 @@ module.exports = function(app) {
 
             itemCtrl.getItemData(id)
                 .then((itemData) => {
-                    
+
                     if (itemData.buys !== undefined) {
                         itemData.buys = convertPrice(itemData.buys);
                         itemData.sells = convertPrice(itemData.sells);
                     }
 
-                    recipeCtrl.getRecipeData(id)
-                        .then((recipeData) => {
+                    if (itemData && itemData.recipes) {
+                        recipeCtrl.getIngredientItemData(itemData.recipes).then(result => {
                             res.json({
                                 data: itemData || null,
-                                recipes: recipeData || null
+                                recipes: result || null
                             });
                         });
+
+                    } else {
+                        recipeCtrl.getRecipeData(id)
+                            .then((recipeData) => {
+                                res.json({
+                                    data: itemData || null,
+                                    recipes: recipeData || null
+                                });
+                            });
+                    }
 
                 })
                 .catch(error => {

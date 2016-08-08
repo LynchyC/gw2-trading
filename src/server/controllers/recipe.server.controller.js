@@ -6,6 +6,7 @@
 const async = require('async');
 const apiUtils = require('./../utils/apiUtils.js');
 const itemCtrl = require('./items.server.controller.js');
+const db = require('./../db/index.js');
 const coinUtil = require('./../utils/coinUtils.js');
 let recipeObject = [];
 
@@ -24,6 +25,9 @@ function getRecipeData(id) {
                 } else {
                     resolve(null);
                 }
+            })
+            .then(recipes => {
+                return db.addRecipes(id, recipes);
             })
             .then(recipeApiResult => {
                 recipeObject = recipeApiResult;
@@ -114,8 +118,11 @@ function getIngredientItemData(recipes) {
                 itemCtrl.getItemData(i.item_id)
                     .then(itemData => {
 
+                        if (itemData === null) {
+                            console.log(`${i.item_id} => ${JSON.stringify(itemData, null, 4)}`);
+                        }
 
-                        if (itemData.buys !== undefined) {
+                        if (itemData.hasOwnProperty('buys')) {
                             let total = (i.count * itemData.buys.unit_price);
                             r.recipeTotal = r.recipeTotal + total;
                             itemData.ingredientTotal = coinUtil.calculatePriceRatio(total);
@@ -152,3 +159,4 @@ function getIngredientItemData(recipes) {
 
 
 exports.getRecipeData = getRecipeData;
+exports.getIngredientItemData = getIngredientItemData;
