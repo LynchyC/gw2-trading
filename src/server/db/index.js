@@ -19,7 +19,33 @@ function getItemByID(id) {
 
             return result;
         }).then(dbResult => {
-            //console.log(`Function getItemByID -> dbResult ${JSON.stringify(dbResult, null, 4)}`);
+            resolve(dbResult);
+        }).catch(error => {
+            console.log(error);
+            resolve(null);
+        });
+    });
+}
+
+function getItemByName(searchText) {
+
+    return new Promise((resolve, reject) => {
+        database.getDB().then(db => {
+
+            var cursor = db.items.find({
+                $text: {
+                    $search: searchText
+                }
+            }, {
+                name: 1,
+                img: 1,
+                itemID: 1,
+                _id: 0
+            }).toArray();
+
+            return cursor;
+
+        }).then(dbResult => {
             resolve(dbResult);
         }).catch(error => {
             console.log(error);
@@ -114,5 +140,6 @@ function addRecipes(id, recipes) {
 }
 
 exports.getItemByID = getItemByID;
+exports.getItemByName = getItemByName;
 exports.addItem = addItem;
 exports.addRecipes = addRecipes;
