@@ -11,7 +11,6 @@ const db = require('./../db/index.js');
 
 function getItemData(id) {
 
-
     return new Promise((resolve, reject) => {
 
         db.getItemByID(id)
@@ -29,6 +28,12 @@ function getItemData(id) {
                 }
             })
             .then(dbResult => {
+                if (dbResult.buys) {
+                    const coinUtil = require('./../utils/coinUtils.js');
+                    dbResult.buys = coinUtil.transformCommerceObject(dbResult.buys);
+                    dbResult.sells = coinUtil.transformCommerceObject(dbResult.sells);
+                }
+
                 resolve(dbResult);
             })
             .catch(error => {

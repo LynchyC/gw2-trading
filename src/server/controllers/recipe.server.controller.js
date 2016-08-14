@@ -77,7 +77,7 @@ function recipeAPIData(ids) {
                     callback(null, {
                         recipeID: recipe.id,
                         discipline: recipe.disciplines,
-                        itemCount: recipe.output_item_count, // jshint ignore:line
+                        itemCount: recipe.output_item_count,
                         ingredients: recipe.ingredients
                     });
                 })
@@ -92,14 +92,6 @@ function recipeAPIData(ids) {
             }
         });
     });
-}
-
-/**
- * Prints to the console anything and everything 
- * that is passed through it
- */
-function printResults(result) {
-    console.log(JSON.stringify(result, null, 4));
 }
 
 /**
@@ -118,16 +110,10 @@ function getIngredientItemData(recipes) {
                 itemCtrl.getItemData(i.item_id)
                     .then(itemData => {
 
-                        if (itemData === null) {
-                            console.log(`${i.item_id} => ${JSON.stringify(itemData, null, 4)}`);
-                        }
-
                         if (itemData.hasOwnProperty('buys')) {
-                            let total = (i.count * itemData.buys.unit_price);
+                            let total = (i.count * itemData.buys.nonConvertedPrice);
                             r.recipeTotal = r.recipeTotal + total;
                             itemData.ingredientTotal = coinUtil.calculatePriceRatio(total);
-                            itemData.buys.price = coinUtil.calculatePriceRatio(itemData.buys.unit_price);
-                            itemData.sells.price = coinUtil.calculatePriceRatio(itemData.sells.unit_price);
                         }
 
                         Object.assign(r.ingredients[index], itemData);

@@ -26,11 +26,6 @@ module.exports = function(app) {
             itemCtrl.getItemData(id)
                 .then((itemData) => {
 
-                    if (itemData.buys !== undefined) {
-                        itemData.buys = convertPrice(itemData.buys);
-                        itemData.sells = convertPrice(itemData.sells);
-                    }
-
                     if (itemData && itemData.recipes) {
                         recipeCtrl.getIngredientItemData(itemData.recipes).then(result => {
                             res.json({
@@ -54,25 +49,6 @@ module.exports = function(app) {
                     res.status(400)
                         .send(error.serverMessage || 'Something has gone wrong whilst fulfilling your request.');
                 });
-
         }
     });
 };
-
-/**
- * Converts the price returned from the commerce API and
- * calculates the Gold/Silver/Bronze ratio for item
- */
-
-
-function convertPrice(transaction) {
-    const coinUtils = require('./../utils/coinUtils.js');
-
-    let itemPrice = {
-        quantity: transaction.quantity,
-        price: transaction.unit_price // jshint ignore:line
-    };
-
-    itemPrice.price = coinUtils.calculatePriceRatio(itemPrice.price);
-    return itemPrice;
-}

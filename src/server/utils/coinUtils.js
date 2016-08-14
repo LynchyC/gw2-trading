@@ -6,7 +6,7 @@
  * Calculates the Gold/Silver/Bronze ratio for item
  */
 
-function calculatePriceRatio (unitPrice) {
+function calculatePriceRatio(unitPrice) {
 
     let gold = parseInt(unitPrice / 10000);
     let silver = 0;
@@ -21,7 +21,7 @@ function calculatePriceRatio (unitPrice) {
     } else {
         silver = parseInt(unitPrice / 100);
     }
-        
+
 
     let bronze = parseInt(unitPrice % 100);
     let price = [gold, silver, bronze];
@@ -29,4 +29,18 @@ function calculatePriceRatio (unitPrice) {
     return price;
 }
 
+function transformCommerceObject(obj) {
+
+    /* jshint -W106 */
+
+    let commerceObject = {
+        quantity: obj.quantity,
+        nonConvertedPrice: obj.unit_price, 
+        price: calculatePriceRatio(obj.unit_price) 
+    };
+
+    return commerceObject;
+}
+
 exports.calculatePriceRatio = calculatePriceRatio;
+exports.transformCommerceObject = transformCommerceObject;
