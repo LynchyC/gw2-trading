@@ -18,11 +18,11 @@ angular.module('gw2Calc').controller('ItemController', ['$scope', '$stateParams'
 
         $scope.searchingForItem = true;
 
-        if ($stateParams.itemID) {
-            $scope.item.ID = $stateParams.itemID;
+        if ($stateParams.item) {
+            $scope.item.ID = $stateParams.item;
         }
         var searchCallback = searchAPI.query({
-                itemID: $scope.item.ID
+                item: $scope.item.ID
             },
             // On Sucess
             function(results) {

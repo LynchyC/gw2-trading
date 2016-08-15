@@ -11,11 +11,11 @@ angular.module('gw2Calc')
             })
 
             .state('home.search', {
-                url: '^/search/:itemID',
+                url: '^/search/:item',
                 controller: 'ItemController',
                 templateUrl: 'js/views/search.html',
                 params: {
-                    itemID: null
+                    item: null
                 }
             });
 

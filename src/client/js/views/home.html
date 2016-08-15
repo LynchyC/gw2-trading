@@ -3,7 +3,7 @@
         <h4>Aleady know the Item ID?</h4>
 
         <form role="form" name="itemForm" method="GET" class="form-inline" ng-submit="getItem()">
-            <input id="idInput" type="number" ng-model="item.ID" name="itemID" class="form-control" placeholder="Item ID" required/>
+            <input id="idInput" type="number" ng-model="search" name="itemID" class="form-control" placeholder="Item ID" required/>
             <input type="submit" value="Get Item Data" class="btn btn-primary" ng-disabled="itemForm.$invalid || itemForm.input.$error.number" />
         </form>
     </div>
