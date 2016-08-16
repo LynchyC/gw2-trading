@@ -8,8 +8,7 @@
                 item: '@item'
             }, {
                 query: {
-                    method: 'GET',
-                    isArray: false
+                    method: 'GET'
                 }
             });
         }

@@ -5,10 +5,12 @@ angular.module('gw2Calc').controller('ItemController', ['$scope', '$stateParams'
     function($scope, $stateParams, searchAPI) {
 
         $scope.item = {
-            ID: null,
             data: null,
             recipeData: null
         };
+
+        $scope.searchValue = null;
+        $scope.searchResults = null;
 
         $scope.searchError = {
             message: null,
@@ -19,29 +21,35 @@ angular.module('gw2Calc').controller('ItemController', ['$scope', '$stateParams'
         $scope.searchingForItem = true;
 
         if ($stateParams.item) {
-            $scope.item.ID = $stateParams.item;
+            $scope.searchValue = $stateParams.item;
         }
         var searchCallback = searchAPI.query({
-                item: $scope.item.ID
+                item: $scope.searchValue
             },
             // On Sucess
             function(results) {
                 $scope.searchingForItem = false;
-                if (!results.data.buys && !results.data.sells) {
-                    $scope.searchError.noCommerce = true;
+
+                if (!isNaN($scope.searchValue)) {
+                    if (!results.data.buys && !results.data.sells) {
+                        $scope.searchError.noCommerce = true;
+                    }
+
+                    if (!results.recipes) {
+                        $scope.searchError.noRecipe = true;
+                    }
+
+                    $scope.item.data = results.data;
+                    $scope.item.recipeData = results.recipes;
+                } else {
+                    $scope.searchResults = results.data;
                 }
 
-                if(!results.recipes) {
-                    $scope.searchError.noRecipe = true;
-                }
-
-                $scope.item.data = results.data;
-                $scope.item.recipeData = results.recipes;
             }).$promise.catch(
             // On Failure
             function(err) {
                 $scope.searchingForItem = false;
-                $scope.searchError.message= err.data;
+                $scope.searchError.message = err.data;
             });
 
     }

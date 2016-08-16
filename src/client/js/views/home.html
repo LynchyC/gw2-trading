@@ -1,10 +1,10 @@
 <section>
     <div class="row">
-        <h4>Aleady know the Item ID?</h4>
+        <h4>Looking for an item?</h4>
 
         <form role="form" name="itemForm" method="GET" class="form-inline" ng-submit="getItem()">
-            <input id="idInput" type="number" ng-model="search" name="itemID" class="form-control" placeholder="Item ID" required/>
-            <input type="submit" value="Get Item Data" class="btn btn-primary" ng-disabled="itemForm.$invalid || itemForm.input.$error.number" />
+            <input id="itemInput" ng-model="search" name="item" class="form-control" placeholder="Item ID/Name" required/>
+            <input type="submit" value="Get Item Data" class="btn btn-primary" ng-disabled="itemForm.$invalid" />
         </form>
     </div>
 

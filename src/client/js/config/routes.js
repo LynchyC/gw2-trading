@@ -13,7 +13,13 @@ angular.module('gw2Calc')
             .state('home.search', {
                 url: '^/search/:item',
                 controller: 'ItemController',
-                templateUrl: 'js/views/search.html',
+                templateUrl: function($stateParams) {
+                    if(!isNaN($stateParams.item)) {
+                        return 'js/views/searchID.html'; 
+                    } else {
+                        return 'js/views/searchList.html';
+                    }
+                }, 
                 params: {
                     item: null
                 }

@@ -1,0 +1,31 @@
+<div ng-show="searchError.message" class="alert alert-danger">
+    <strong>Error!</strong> {{ searchError.message }}
+</div>
+
+<center ng-show="searchingForItem" id="loadingGif">
+    <img src="/images/rolling.gif" />
+</center>
+
+
+
+<div id="searchResultDiv" ng-show="searchResults">
+
+    <h3>Found {{searchResults.length}} result<span ng-show="searchResults.length > 1">s</span> for '{{searchValue}}':</h3>
+
+    <table ng-show="searchResults.length > 0" class="table table-hover">
+        <thead>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody id="itemList">
+            <tr ng-repeat="item in searchResults" ui-sref="home.search({item: {{item.itemID}}})">
+                <td class="itemListImg">
+                    <img ng-src="{{item.img}}" alt="Item Image" />
+                </td>
+                <td>
+                    <h4>{{item.name}}</h4>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

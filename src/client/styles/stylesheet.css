@@ -23,4 +23,30 @@
     width: 24px;
 }
 
+#searchResultDiv table {
+     width: 70%;
+}
+
+#searchResultDiv > h3:first-child {
+    font-weight: bold;
+}
+
+#itemList tr td:hover {
+    cursor: pointer;
+}
+
+#itemList tr td:nth-child(2) {
+    vertical-align:middle;
+}
+
+#itemList h4 {
+    color:#6699ff;
+    font-weight: bold;
+}
+
+.itemListImg {
+    width: 64px;
+}
+
+
 
