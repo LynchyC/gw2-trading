@@ -20,11 +20,19 @@ module.exports = function(app) {
         if (isNaN(req.params.item)) {
 
             let searchText = req.params.item;
+
+            if (searchText.length < 4) {
+                res.status(400)
+                    .send({
+                        error: 'Search term too short! Please try again.'
+                    });
+            }
+
             const db = require('./../db/index.js');
             db.getItemByName(searchText)
                 .then(dbResult => {
                     res.json({
-                        data: dbResult || null
+                            data: dbResult || null
                     });
                 })
                 .catch(error => {

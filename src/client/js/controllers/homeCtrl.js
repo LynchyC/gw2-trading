@@ -12,5 +12,15 @@ angular.module('gw2Calc').controller('HomeController', ['$scope', '$state',
             });
         };
 
+        $scope.checkValidity = function() {
+            if(isNaN($scope.search)) {
+                if($scope.search.length < 4) {
+                    return true;
+                }
+            } 
+
+            return false;
+        };
+
     }
 ]);
