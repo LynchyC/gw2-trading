@@ -6,6 +6,7 @@ angular.module('gw2Calc').controller('ItemController', ['$scope', '$stateParams'
 
         $scope.item = {
             data: null,
+            commerce: null,
             recipeData: null
         };
 
@@ -31,7 +32,7 @@ angular.module('gw2Calc').controller('ItemController', ['$scope', '$stateParams'
                 $scope.searchingForItem = false;
 
                 if (!isNaN($scope.searchValue)) {
-                    if (!results.data.buys && !results.data.sells) {
+                    if (!results.data.commerce) {
                         $scope.searchError.noCommerce = true;
                     }
 
@@ -39,8 +40,11 @@ angular.module('gw2Calc').controller('ItemController', ['$scope', '$stateParams'
                         $scope.searchError.noRecipe = true;
                     }
 
-                    $scope.item.data = results.data;
-                    $scope.item.recipeData = results.recipes;
+                    $scope.item = {
+                        data: results.data,
+                        commerce: results.data.commerce || null,
+                        recipeData: results.recipes
+                    };
                 } else {
                     $scope.searchResults = results.data;
                 }

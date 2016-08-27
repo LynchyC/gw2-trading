@@ -21,20 +21,20 @@ function getRecipeData(id) {
         getRecipeOutputs(id)
             .then(outputIDs => {
                 if (outputIDs) {
-                    return recipeAPIData(outputIDs);
+                    return recipeAPIData(outputIDs)
+                        .then(recipes => {
+                            return db.addRecipes(id, recipes);
+                        })
+                        .then(recipeApiResult => {
+                            recipeObject = recipeApiResult;
+                            return getIngredientItemData(recipeObject);
+                        });
                 } else {
-                    resolve(null);
+                    return null;
                 }
             })
-            .then(recipes => {
-                return db.addRecipes(id, recipes);
-            })
-            .then(recipeApiResult => {
-                recipeObject = recipeApiResult;
-                return getIngredientItemData(recipeObject);
-            })
             .then(result => {
-                resolve(recipeObject);
+                resolve(result);
             })
             .catch((error) => {
                 if (error.serverMessage) {
@@ -74,12 +74,8 @@ function recipeAPIData(ids) {
         async.concat(ids, function recipeAPIData(id, callback) {
             apiUtils.gw2APIData('recipes/', id)
                 .then((recipe) => {
-                    callback(null, {
-                        recipeID: recipe.id,
-                        discipline: recipe.disciplines,
-                        itemCount: recipe.output_item_count,
-                        ingredients: recipe.ingredients
-                    });
+                    delete recipe.output_item_id;
+                    callback(null, recipe);
                 })
                 .catch((error) => {
                     reject(error);
@@ -110,8 +106,8 @@ function getIngredientItemData(recipes) {
                 itemCtrl.getItemData(i.item_id)
                     .then(itemData => {
 
-                        if (itemData.hasOwnProperty('buys')) {
-                            let total = (i.count * itemData.buys.nonConvertedPrice);
+                        if (itemData.hasOwnProperty('commerce')) {
+                            let total = (i.count * itemData.commerce.buys.nonConvertedPrice);
                             r.recipeTotal = r.recipeTotal + total;
                             itemData.ingredientTotal = coinUtil.calculatePriceRatio(total);
                         }

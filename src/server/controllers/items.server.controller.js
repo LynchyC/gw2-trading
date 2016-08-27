@@ -28,10 +28,10 @@ function getItemData(id) {
                 }
             })
             .then(dbResult => {
-                if (dbResult.buys) {
+                if (dbResult.commerce) {
                     const coinUtil = require('./../utils/coinUtils.js');
-                    dbResult.buys = coinUtil.transformCommerceObject(dbResult.buys);
-                    dbResult.sells = coinUtil.transformCommerceObject(dbResult.sells);
+                    dbResult.commerce.buys = coinUtil.transformCommerceObject(dbResult.commerce.buys);
+                    dbResult.commerce.sells = coinUtil.transformCommerceObject(dbResult.commerce.sells);
                 }
 
                 resolve(dbResult);
@@ -50,12 +50,10 @@ function itemAPISearch(id) {
             .then((item) => {
 
                 // Only gather the properties needed
-                let itemData = {
-                    itemID: id,
-                    dateCreated: new Date(),
-                    name: item.name,
-                    img: item.icon
-                };
+                let itemData = item;
+                itemData.itemID = item.id;
+                itemData.dateCreated = new Date();
+                delete itemData.id;
 
                 // On to the next one...
                 resolve(itemData);
@@ -71,18 +69,13 @@ function commerceAPISearch(item) {
         apiUtils.gw2APIData('commerce/prices/', item.itemID)
             .then(function(commerceResult) {
 
-                if (commerceResult === null) {
-                    resolve(item);
-                } else {
-
-                    item.buys = commerceResult.buys;
-                    item.sells = commerceResult.sells;
+                if (commerceResult !== null) {
+                    item.commerce = commerceResult;
 
                     // Combines the item data and commerce data into one object.
-                    let gw2Result = Object.assign(commerceResult, item);
-                    delete gw2Result.id;
-                    resolve(gw2Result);
+                    delete item.commerce.id;
                 }
+                resolve(item);
             }).catch(error => reject(error));
     });
 }

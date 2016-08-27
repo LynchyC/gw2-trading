@@ -20,7 +20,7 @@
         <tbody id="itemList">
             <tr ng-repeat="item in searchResults" ui-sref="home.search({item: {{item.itemID}}})">
                 <td class="itemListImg">
-                    <img ng-src="{{item.img}}" alt="Item Image" />
+                    <img ng-src="{{item.icon}}" alt="Item Image" />
                 </td>
                 <td>
                     <h4>{{item.name}}</h4>

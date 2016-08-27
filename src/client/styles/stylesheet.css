@@ -19,6 +19,11 @@
     vertical-align: middle;
 }
 
+.itemCoreData img {
+    width: 64px;
+    height: 64px;
+}
+
 #recipeImg {
     width: 24px;
 }
@@ -46,6 +51,11 @@
 
 .itemListImg {
     width: 64px;
+}
+
+.itemListImg img {
+    width: inherit;
+    height: 64px;
 }
 
 

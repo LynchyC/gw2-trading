@@ -16,33 +16,33 @@
     <img src="/images/rolling.gif" />
 </center>
 
-<div>
-    <h2><img ng-src="{{item.data.img}}" /><strong> {{item.data.name}}</strong></h2>
+<div class="itemCoreData">
+    <h2><img ng-src="{{item.data.icon}}" /><strong> {{item.data.name}}</strong></h2>
 </div>
 
 
-<div ng-show="item.data.buys">
+<div ng-show="item.commerce.buys">
     <h3>Buys</h3>
-    <p><strong>Quantity:</strong> {{item.data.buys.quantity}}</p>
+    <p><strong>Quantity:</strong> {{item.commerce.buys.quantity}}</p>
     <div>
         <span><strong>Price:</strong></span>
         <ul class="coinDisplay">
-            <li>{{item.data.buys.price[0]}} <img src="/images/goldCoin.png" /></li>
-            <li>{{item.data.buys.price[1]}} <img src="/images/silverCoin.png" /></li>
-            <li>{{item.data.buys.price[2]}} <img src="/images/bronzeCoin.png" /></li>
+            <li>{{item.commerce.buys.price[0]}} <img src="/images/goldCoin.png" /></li>
+            <li>{{item.commerce.buys.price[1]}} <img src="/images/silverCoin.png" /></li>
+            <li>{{item.commerce.buys.price[2]}} <img src="/images/bronzeCoin.png" /></li>
         </ul>
     </div>
 </div>
 
-<div ng-show="item.data.sells">
+<div ng-show="item.commerce.sells">
     <h3>Sells</h3>
-    <p><strong>Quantity:</strong> {{item.data.sells.quantity}}</p>
+    <p><strong>Quantity:</strong> {{item.commerce.sells.quantity}}</p>
     <div>
         <span><strong>Price:</strong></span>
         <ul class="coinDisplay">
-            <li>{{item.data.sells.price[0]}} <img src="/images/goldCoin.png" /></li>
-            <li>{{item.data.sells.price[1]}} <img src="/images/silverCoin.png" /></li>
-            <li>{{item.data.sells.price[2]}} <img src="/images/bronzeCoin.png" /></li>
+            <li>{{item.commerce.sells.price[0]}} <img src="/images/goldCoin.png" /></li>
+            <li>{{item.commerce.sells.price[1]}} <img src="/images/silverCoin.png" /></li>
+            <li>{{item.commerce.sells.price[2]}} <img src="/images/bronzeCoin.png" /></li>
         </ul>
     </div>
 </div>
@@ -54,8 +54,8 @@
     <h3><u><strong>Recipe Data</strong></u></h3>
 
     <uib-tabset active="active">
-        <uib-tab ng-repeat="recipe in item.recipeData" index="$index" heading="{{recipe.discipline[0]}}">
-            <h3><strong>{{recipe.discipline[0]}}</strong></h3>
+        <uib-tab ng-repeat="recipe in item.recipeData" index="$index" heading="{{recipe.disciplines[0]}}">
+            <h3><strong>{{recipe.disciplines[0]}}</strong></h3>
             <table class="table">
                 <thead>
                     <th>#</th>
@@ -66,13 +66,13 @@
                 <tbody>
                     <tr ng-repeat="i in recipe.ingredients">
                         <td>{{i.count}}</td>
-                        <td><img id="recipeImg" ng-src="{{i.img}}" alt="Item Image"> {{i.name}}</td>
-                        <td ng-show="!i.buys">0</td>
-                        <td ng-show="i.buys">
+                        <td><img id="recipeImg" ng-src="{{i.icon}}" alt="Item Image"> {{i.name}}</td>
+                        <td ng-show="!i.commerce.buys">0</td>
+                        <td ng-show="i.commerce.buys">
                             <ul class="coinDisplay">
-                                <li>{{i.buys.price[0]}} <img src="/images/goldCoin.png" /></li>
-                                <li>{{i.buys.price[1]}} <img src="/images/silverCoin.png" /></li>
-                                <li>{{i.buys.price[2]}} <img src="/images/bronzeCoin.png" /></li>
+                                <li>{{i.commerce.buys.price[0]}} <img src="/images/goldCoin.png" /></li>
+                                <li>{{i.commerce.buys.price[1]}} <img src="/images/silverCoin.png" /></li>
+                                <li>{{i.commerce.buys.price[2]}} <img src="/images/bronzeCoin.png" /></li>
                             </ul>
                         </td>
                         <td ng-show="!i.ingredientTotal">0</td>
