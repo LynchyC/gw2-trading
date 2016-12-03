@@ -47,14 +47,17 @@ function getRecipeData(id) {
 }
 
 /**
- * Uses the item id that is passed through to 
- * search for the recipes that craft the item.
+ * API: 'recipes/search?output={id}'
+ * RETURNS: https://wiki.guildwars2.com/wiki/API:2/recipes/search 
+ * DESCRIPTION: Uses the item id that is passed through to search for the recipes that craft the item.
  */
 function getRecipeOutputs(id) {
 
     return new Promise((resolve, reject) => {
         apiUtils.gw2APIData('recipes/search?output=', id)
             .then((returnIDs) => {
+
+                // Not all gw2 items have recipe data 
                 if (returnIDs.length === 0) {
                     resolve(null);
                 } else {
@@ -62,18 +65,20 @@ function getRecipeOutputs(id) {
                 }
             })
             .catch((error) => reject(error));
-
     });
 }
 
 /**
- * Returns information about recipes using their respective IDs
+ * API: 'recipes/{id}'
+ * RETURNS: https://wiki.guildwars2.com/wiki/API:2/recipes 
+ * DESCRIPTION: Returns information about recipes using their respective IDs
  */
 function recipeAPIData(ids) {
     return new Promise((resolve, reject) => {
         async.concat(ids, function recipeAPIData(id, callback) {
             apiUtils.gw2APIData('recipes/', id)
                 .then((recipe) => {
+                    // Redundant data. Item Data already contains ID.
                     delete recipe.output_item_id;
                     callback(null, recipe);
                 })
@@ -91,7 +96,7 @@ function recipeAPIData(ids) {
 }
 
 /**
- *  Retrives the relative item and commerce data for each item ID that is passed.
+ *  DESCRIPTION: Using Item Controller, retrives the item and commerce data.
  */
 function getIngredientItemData(recipes) {
 

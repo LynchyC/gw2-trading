@@ -47,7 +47,11 @@ module.exports = function(app) {
                 .then(itemData => {
 
                     if (itemData && itemData.recipes) {
-                        recipeCtrl.getIngredientItemData(itemData.recipes).then(result => {
+
+                        let recipes = itemData.recipes;
+                        delete itemData.recipes;
+
+                        recipeCtrl.getIngredientItemData(recipes).then(result => {
                             res.json({
                                 data: itemData || null,
                                 recipes: result || null

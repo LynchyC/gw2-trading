@@ -42,6 +42,12 @@ function getItemData(id) {
     });
 }
 
+/**
+ * API: 'items/{id}'
+ * RESULT: https://wiki.guildwars2.com/wiki/API:2/items 
+ * DESCRIPTION: Retrieves GW2 item data  
+ */
+
 function itemAPISearch(id) {
 
     return new Promise((resolve, reject) => {
@@ -51,6 +57,7 @@ function itemAPISearch(id) {
 
                 // Only gather the properties needed
                 let itemData = item;
+                // Change ID property name to avoid confusion with MongoDB.
                 itemData.itemID = item.id;
                 itemData.dateCreated = new Date();
                 delete itemData.id;
@@ -61,6 +68,12 @@ function itemAPISearch(id) {
             }).catch((error) => reject(error));
     });
 }
+
+/**
+ * API: 'commerce/prices/{id}'
+ * RESULT: https://wiki.guildwars2.com/wiki/API:2/commerce/prices
+ * DESCRIPTION: Retrieves GW2 Commerce data
+ */
 
 function commerceAPISearch(item) {
     return new Promise((resolve, reject) => {
