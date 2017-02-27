@@ -2,9 +2,9 @@
     <div class="row">
         <h4>Looking for an item?</h4>
 
-        <form role="form" name="itemForm" method="GET" class="form-inline" ng-submit="getItem()">
-            <input id="itemInput" ng-model="search" name="item" class="form-control" placeholder="Item ID/Name" required/>
-            <input type="submit" value="Get Item Data" class="btn btn-primary" ng-disabled="itemForm.$invalid || checkValidity()" />
+        <form role="form" name="itemForm" method="GET" class="form-inline" ng-submit="vm.getItem()">
+            <input id="itemInput" ng-model="vm.search" name="item" class="form-control" placeholder="Item ID/Name" required/>
+            <input type="submit" value="Get Item Data" class="btn btn-primary" ng-disabled="itemForm.$invalid || vm.checkValidity()" />
         </form>
     </div>
 

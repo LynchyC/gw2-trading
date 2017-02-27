@@ -7,6 +7,7 @@ angular.module('gw2Calc')
             .state('home', {
                 url: '/',
                 controller: 'HomeController',
+                controllerAs: 'vm',
                 templateUrl: '../views/home.html'
             })
 
