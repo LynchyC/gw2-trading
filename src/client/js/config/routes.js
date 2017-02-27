@@ -7,7 +7,7 @@ angular.module('gw2Calc')
             .state('home', {
                 url: '/',
                 controller: 'HomeController',
-                templateUrl: 'js/views/home.html'
+                templateUrl: '../views/home.html'
             })
 
             .state('home.search', {
@@ -15,9 +15,9 @@ angular.module('gw2Calc')
                 controller: 'ItemController',
                 templateUrl: function($stateParams) {
                     if(!isNaN($stateParams.item)) {
-                        return 'js/views/searchID.html'; 
+                        return '../views/searchID.html'; 
                     } else {
-                        return 'js/views/searchList.html';
+                        return '../views/searchList.html';
                     }
                 }, 
                 params: {
