@@ -11,6 +11,10 @@ module.exports = function(app) {
         res.render('index', {});
     });
 
+    app.route('/search/:itemID').get(function(req, res){
+        res.render('index', {});
+    });
+
     /**
      * Get item info from GW2 API
      */
