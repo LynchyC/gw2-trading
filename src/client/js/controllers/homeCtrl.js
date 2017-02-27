@@ -14,7 +14,7 @@ angular.module('gw2Calc').controller('HomeController', ['$scope', '$state',
 
         $scope.checkValidity = function() {
             if(isNaN($scope.search)) {
-                if($scope.search.length < 4) {
+                if($scope.search.length < 3) {
                     return true;
                 }
             } 

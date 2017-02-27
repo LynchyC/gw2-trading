@@ -25,7 +25,7 @@ module.exports = function(app) {
 
             let searchText = req.params.item;
 
-            if (searchText.length < 4) {
+            if (searchText.length < 3) {
                 res.status(400)
                     .send({
                         error: 'Search term too short! Please try again.'
