@@ -1,16 +1,18 @@
 'use strict';
 
-angular.module('gw2Calc').controller('ItemController', ['$scope', '$stateParams', 'searchAPI',
+angular.module('gw2Calc').controller('ItemController', ['$stateParams', 'searchAPI',
 
-    function ($scope, $stateParams, searchAPI) {
+    function ($stateParams, searchAPI) {
+
+        var vm = this;
 
         // Will be populate from the state params object 
-        $scope.searchValue = null;
+        vm.searchValue = null;
 
         /** 
          * Data object that will be displayed to the user (/search/:id) 
          */
-        $scope.item = {
+        vm.item = {
             data: null,
             commerce: null,
             recipeData: null
@@ -19,54 +21,54 @@ angular.module('gw2Calc').controller('ItemController', ['$scope', '$stateParams'
         /** 
          * Data object that will be displayed to the user (/search/:name) 
          */
-        $scope.searchResults = null;
+        vm.searchResults = null;
 
-        $scope.searchError = {
+        vm.searchError = {
             message: null,
             noCommerce: false,
             noRecipe: false
         };
 
         // Used to toggle the loading GIF's visibility
-        $scope.searchingForItem = true;
+        vm.searchingForItem = true;
 
         if ($stateParams.item) {
-            $scope.searchValue = $stateParams.item;
+            vm.searchValue = $stateParams.item;
         }
         var searchCallback = searchAPI.query({
-                item: $scope.searchValue
+                item: vm.searchValue
             },
             // On Success
             function (results) {
                 // Hides the loading GIF 
-                $scope.searchingForItem = false;
+                vm.searchingForItem = false;
 
                 // Handles data depending on whether the user searched using ID/Name
-                if (!isNaN($scope.searchValue)) {
+                if (!isNaN(vm.searchValue)) {
                     if (!results.data.commerce) {
-                        $scope.searchError.noCommerce = true;
+                        vm.searchError.noCommerce = true;
                     }
 
                     // Hides the div that displays the recipe data
                     if (!results.recipes) {
-                        $scope.searchError.noRecipe = true;
+                        vm.searchError.noRecipe = true;
                     }
 
-                    $scope.item = {
+                    vm.item = {
                         data: results.data,
                         commerce: results.data.commerce || null,
                         recipeData: results.recipes
                     };
                 } else {
                     // Expect an object array to return.
-                    $scope.searchResults = results.data;
+                    vm.searchResults = results.data;
                 }
 
             }).$promise.catch(
             // On Failure
             function (err) {
-                $scope.searchingForItem = false;
-                $scope.searchError.message = err.data;
+                vm.searchingForItem = false;
+                vm.searchError.message = err.data;
             });
 
     }

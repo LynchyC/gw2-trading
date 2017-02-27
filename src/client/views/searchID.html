@@ -1,60 +1,60 @@
-<div ng-show="searchError.message" class="alert alert-danger">
-    <strong>Error!</strong> {{ searchError.message }}
+<div ng-show="vm.searchError.message" class="alert alert-danger">
+    <strong>Error!</strong> {{ vm.searchError.message }}
 </div>
 
-<div class="alert alert-info alert-dismissible" role="alert" ng-show="searchError.noCommerce">
+<div class="alert alert-info alert-dismissible" role="alert" ng-show="vm.searchError.noCommerce">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <strong>Message!</strong> Commerce data is not available for this item.
 </div>
 
-<div class="alert alert-success alert-dismissible" role="alert" ng-show="searchError.noRecipe">
+<div class="alert alert-success alert-dismissible" role="alert" ng-show="vm.searchError.noRecipe">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
     <strong>Message!</strong> Recipe data is not available for this item.
 </div>
 
-<center ng-show="searchingForItem" id="loadingGif">
+<center ng-show="vm.searchingForItem" id="loadingGif">
     <img src="/images/rolling.gif" />
 </center>
 
 <div class="itemCoreData">
-    <h2><img ng-src="{{item.data.icon}}" /><strong> {{item.data.name}}</strong></h2>
+    <h2><img ng-src="{{vm.item.data.icon}}" /><strong> {{vm.item.data.name}}</strong></h2>
 </div>
 
 
-<div ng-show="item.commerce.buys">
+<div ng-show="vm.item.commerce.buys">
     <h3>Buys</h3>
-    <p><strong>Quantity:</strong> {{item.commerce.buys.quantity}}</p>
+    <p><strong>Quantity:</strong> {{vm.item.commerce.buys.quantity}}</p>
     <div>
         <span><strong>Price:</strong></span>
         <ul class="coinDisplay">
-            <li>{{item.commerce.buys.price[0]}} <img src="/images/goldCoin.png" /></li>
-            <li>{{item.commerce.buys.price[1]}} <img src="/images/silverCoin.png" /></li>
-            <li>{{item.commerce.buys.price[2]}} <img src="/images/bronzeCoin.png" /></li>
+            <li>{{vm.item.commerce.buys.price[0]}} <img src="/images/goldCoin.png" /></li>
+            <li>{{vm.item.commerce.buys.price[1]}} <img src="/images/silverCoin.png" /></li>
+            <li>{{vm.item.commerce.buys.price[2]}} <img src="/images/bronzeCoin.png" /></li>
         </ul>
     </div>
 </div>
 
-<div ng-show="item.commerce.sells">
+<div ng-show="vm.item.commerce.sells">
     <h3>Sells</h3>
-    <p><strong>Quantity:</strong> {{item.commerce.sells.quantity}}</p>
+    <p><strong>Quantity:</strong> {{vm.item.commerce.sells.quantity}}</p>
     <div>
         <span><strong>Price:</strong></span>
         <ul class="coinDisplay">
-            <li>{{item.commerce.sells.price[0]}} <img src="/images/goldCoin.png" /></li>
-            <li>{{item.commerce.sells.price[1]}} <img src="/images/silverCoin.png" /></li>
-            <li>{{item.commerce.sells.price[2]}} <img src="/images/bronzeCoin.png" /></li>
+            <li>{{vm.item.commerce.sells.price[0]}} <img src="/images/goldCoin.png" /></li>
+            <li>{{vm.item.commerce.sells.price[1]}} <img src="/images/silverCoin.png" /></li>
+            <li>{{vm.item.commerce.sells.price[2]}} <img src="/images/bronzeCoin.png" /></li>
         </ul>
     </div>
 </div>
 
 
-<div ng-show="item.recipeData">
+<div ng-show="vm.item.recipeData">
     <hr />
 
     <h3><u><strong>Recipe Data</strong></u></h3>
 
     <uib-tabset active="active">
-        <uib-tab ng-repeat="recipe in item.recipeData" index="$index" heading="{{recipe.disciplines[0]}}">
+        <uib-tab ng-repeat="recipe in vm.item.recipeData" index="$index" heading="{{recipe.disciplines[0]}}">
             <h3><strong>{{recipe.disciplines[0]}}</strong></h3>
             <table class="table">
                 <thead>

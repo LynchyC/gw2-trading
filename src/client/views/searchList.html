@@ -1,24 +1,24 @@
-<div ng-show="searchError.message" class="alert alert-danger">
-    <strong>Error!</strong> {{ searchError.message }}
+<div ng-show="vm.searchError.message" class="alert alert-danger">
+    <strong>Error!</strong> {{ vm.searchError.message }}
 </div>
 
-<center ng-show="searchingForItem" id="loadingGif">
+<center ng-show="vm.searchingForItem" id="loadingGif">
     <img src="/images/rolling.gif" />
 </center>
 
 
 
-<div id="searchResultDiv" ng-show="searchResults">
+<div id="searchResultDiv" ng-show="vm.searchResults">
 
-    <h3>Found {{searchResults.length}} result<span ng-show="searchResults.length > 1">s</span> for '{{searchValue}}':</h3>
+    <h3>Found {{vm.searchResults.length}} result<span ng-show="vm.searchResults.length > 1">s</span> for '{{vm.searchValue}}':</h3>
 
-    <table ng-show="searchResults.length > 0" class="table table-hover">
+    <table ng-show="vm.searchResults.length > 0" class="table table-hover">
         <thead>
             <th></th>
             <th></th>
         </thead>
         <tbody id="itemList">
-            <tr ng-repeat="item in searchResults" ui-sref="home.search({item: {{item.itemID}}})">
+            <tr ng-repeat="item in vm.searchResults" ui-sref="home.search({item: {{item.itemID}}})">
                 <td class="itemListImg">
                     <img ng-src="{{item.icon}}" alt="Item Image" />
                 </td>
