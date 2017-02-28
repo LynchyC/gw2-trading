@@ -4,6 +4,7 @@
 var express = require('express');
 var app     = express();
 var swig    = require('swig');
+var routes  = require('./routes/index.js');
 
 // Set up view engine
 app.engine('html', swig.renderFile);
@@ -18,7 +19,7 @@ app.use(express.static(__dirname + '/../client/'));
 var port = process.env.PORT || 1337;
 
 // Set up routes
-require('./routes/index.js')(app);
+app.use('/',routes);
 
 // Start the server
 app.listen(port);
