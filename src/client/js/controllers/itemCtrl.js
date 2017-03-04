@@ -25,12 +25,17 @@ angular.module('gw2Calc').controller('ItemController', ['$state', '$stateParams'
          * Data object that will be displayed to the user (/search/:name) 
          */
         vm.searchResults = null;
+        vm.filteredResults = null;
 
-        vm.searchError = {
-            message: null,
-            noCommerce: false,
-            noRecipe: false
+        // Variable binded to current page number for angular pagination directive
+        vm.currentPage = 1;
+
+        vm.setPage = function () {
+            var start = ((vm.currentPage - 1) * 25), // 25 => Number of items to show between pagination pages
+                end   = start + 25;
+            vm.filteredResults = vm.searchResults.slice(start,end);
         };
+
 
         // Used to toggle the loading GIF's visibility
         vm.searchingForItem = true;
@@ -68,12 +73,13 @@ angular.module('gw2Calc').controller('ItemController', ['$state', '$stateParams'
                         $state.go('home.search', {
                             item: results.data[0].itemID
                         });
-                    } else if(results.data.length === 0) {
+                    } else if (results.data.length === 0) {
                         vm.errorMessage = '0 Results were found for \'' + vm.searchValue + '\'';
                     }
 
                     // Expect an object array to return.
                     vm.searchResults = results.data;
+                    vm.setPage(); // Show the first page of results
                 }
 
             }).$promise.catch(

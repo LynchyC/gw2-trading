@@ -10,13 +10,16 @@
 
     <h3 ng-hide="vm.errorMessage">Found {{vm.searchResults.length}} result<span ng-show="vm.searchResults.length > 1">s</span> for '{{vm.searchValue}}':</h3>
 
+    <ul uib-pagination total-items="vm.searchResults.length" ng-hide="vm.errorMessage" ng-model="vm.currentPage" ng-change="vm.setPage()" 
+        max-size="10" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
+
     <table ng-show="vm.searchResults.length > 0" class="table table-hover">
         <thead>
             <th></th>
             <th></th>
         </thead>
         <tbody id="itemList">
-            <tr ng-repeat="item in vm.searchResults" ui-sref="home.search({item: {{item.itemID}}})">
+            <tr ng-repeat="item in vm.filteredResults" ui-sref="home.search({item: {{item.itemID}}})">
                 <td class="itemListImg">
                     <img ng-src="{{item.icon}}" alt="Item Image" />
                 </td>
