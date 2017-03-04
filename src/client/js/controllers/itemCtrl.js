@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('gw2Calc').controller('ItemController', ['$stateParams', 'searchAPI', 'notificationService',
+angular.module('gw2Calc').controller('ItemController', ['$state', '$stateParams', 'searchAPI', 'notificationService',
 
-    function ($stateParams, searchAPI, notificationService) {
+    function ($state, $stateParams, searchAPI, notificationService) {
 
         var vm = this;
 
@@ -38,7 +38,8 @@ angular.module('gw2Calc').controller('ItemController', ['$stateParams', 'searchA
         if ($stateParams.item) {
             vm.searchValue = $stateParams.item;
         }
-        var searchCallback = searchAPI.query({
+
+        var searchItem = searchAPI.query({
                 item: vm.searchValue
             },
             // On Success
@@ -61,8 +62,16 @@ angular.module('gw2Calc').controller('ItemController', ['$stateParams', 'searchA
                         data: results.data,
                         commerce: results.data.commerce || null,
                         recipeData: results.recipes
-                    };                    
+                    };
                 } else {
+                    if (results.data.length === 1) {
+                        $state.go('home.search', {
+                            item: results.data[0].itemID
+                        });
+                    } else if(results.data.length === 0) {
+                        vm.errorMessage = '0 Results were found for \'' + vm.searchValue + '\'';
+                    }
+
                     // Expect an object array to return.
                     vm.searchResults = results.data;
                 }
@@ -71,7 +80,7 @@ angular.module('gw2Calc').controller('ItemController', ['$stateParams', 'searchA
             // On Failure
             function (err) {
                 vm.searchingForItem = false;
-                notificationService.notifyError(err.data, 'Error has occured');
+                vm.errorMessage = err.data ? err.data : 'Oops! Something went wrong!';
             });
 
     }

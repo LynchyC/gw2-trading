@@ -6,6 +6,9 @@
     <h2><img ng-src="{{vm.item.data.icon}}" /><strong> {{vm.item.data.name}}</strong></h2>
 </div>
 
+<div class="searchErrorMessage" ng-show="vm.errorMessage">
+    <h2 class="text-center">{{vm.errorMessage}}</h2>
+</div>
 
 <div ng-show="vm.item.commerce.buys">
     <h3>Buys</h3>
@@ -37,7 +40,9 @@
 <div ng-show="vm.item.recipeData">
     <hr />
 
-    <h3><u><strong>Recipe Data</strong></u></h3>
+    <h3>
+        <u><strong>Recipe Data</strong></u>
+    </h3>
 
     <uib-tabset active="active">
         <uib-tab ng-repeat="recipe in vm.item.recipeData" index="$index" heading="{{recipe.disciplines[0]}}">
