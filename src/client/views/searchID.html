@@ -57,7 +57,11 @@
                 <tbody>
                     <tr ng-repeat="i in recipe.ingredients">
                         <td>{{i.count}}</td>
-                        <td><img id="recipeImg" ng-src="{{i.icon}}" alt="Item Image"> {{i.name}}</td>
+                        <td><img id="recipeImg" ng-src="{{i.icon}}" alt="Item Image">
+                            <span>
+                                <a ui-sref="home.search({item: {{i.itemID}}})"> {{i.name}}</a>
+                            </span>
+                        </td>
                         <td ng-show="!i.commerce.buys">0</td>
                         <td ng-show="i.commerce.buys">
                             <ul class="coinDisplay">
