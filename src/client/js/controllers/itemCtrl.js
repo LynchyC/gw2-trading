@@ -1,13 +1,16 @@
 'use strict';
 
-angular.module('gw2Calc').controller('ItemController', ['$stateParams', 'searchAPI',
+angular.module('gw2Calc').controller('ItemController', ['$stateParams', 'searchAPI', 'notificationService',
 
-    function ($stateParams, searchAPI) {
+    function ($stateParams, searchAPI, notificationService) {
 
         var vm = this;
 
         // Will be populate from the state params object 
         vm.searchValue = null;
+
+        // Clear all notifications on screen
+        notificationService.clear();
 
         /** 
          * Data object that will be displayed to the user (/search/:id) 
@@ -46,19 +49,19 @@ angular.module('gw2Calc').controller('ItemController', ['$stateParams', 'searchA
                 // Handles data depending on whether the user searched using ID/Name
                 if (!isNaN(vm.searchValue)) {
                     if (!results.data.commerce) {
-                        vm.searchError.noCommerce = true;
+                        notificationService.notifyInfo('Commerce data is not available for this item.', 'Message!');
                     }
 
-                    // Hides the div that displays the recipe data
+                    // Displays notification if there is no recipe data
                     if (!results.recipes) {
-                        vm.searchError.noRecipe = true;
+                        notificationService.notifyInfo('Recipe data is not available for this item.', 'Message!');
                     }
 
                     vm.item = {
                         data: results.data,
                         commerce: results.data.commerce || null,
                         recipeData: results.recipes
-                    };
+                    };                    
                 } else {
                     // Expect an object array to return.
                     vm.searchResults = results.data;
@@ -68,7 +71,7 @@ angular.module('gw2Calc').controller('ItemController', ['$stateParams', 'searchA
             // On Failure
             function (err) {
                 vm.searchingForItem = false;
-                vm.searchError.message = err.data;
+                notificationService.notifyError(err.data, 'Error has occured');
             });
 
     }
