@@ -15,11 +15,12 @@ body {
 
 #page-footer,
 #page-body:after {
-    height: 22px;
+    margin-top: 10px;
+    height: 21px;
 }
 
-#page-footer div {
-    margin-bottom: 15px;
+.hr {
+    margin-bottom: 10px;
 }
 
 .searchErrorMessage {
