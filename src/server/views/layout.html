@@ -8,23 +8,27 @@
     <!-- bower:css -->
     <!-- endbower -->
 
-    <!-- inject:css -->
+    <!-- inject:css -->      
     <!-- endinject -->
 
 </head>
 
 <body class="ng-cloak">
-    <section class="content">
-        <section id="body" class="container">
-            <div class="page-header">
-                <h1>GW2 Calculator</h1>
-            </div>
-            {% block content %}{% endblock %}
+    <div id="page-body">
+        <section class="content">
+            <section class="container">
+                <div class="page-header">
+                    <h1>GW2 Calculator</h1>
+                </div>
+                {% block content %}{% endblock %}
+            </section>
         </section>
-    </section>
+    </div>
     <hr />
-    <footer class="container">
-        <p>GW2 Calculator</p>
+    <footer id="page-footer">
+        <div class="text-center">
+            GW2 Calculator - <a href="https://github.com/LynchyC/GW2_Calculator" target="_blank">Find my code on Github!</a>
+        </div>
     </footer>
 
     <!-- bower:js -->

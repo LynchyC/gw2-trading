@@ -1,6 +1,21 @@
-.alert {
-    margin-top: 10px;
-    width: 75%;
+html, body {
+	height: 100%;
+}
+
+#page-body {
+  min-height: 100%;
+	margin-bottom: -62px; 
+}
+#page-body:after {
+  content: "";
+  display: block;
+}
+#page-footer, #page-body:after {
+	height: 22px; 
+}
+
+#page-footer div {
+    margin-bottom: 15px;
 }
 
 .coinDisplay {
