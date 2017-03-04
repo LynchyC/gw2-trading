@@ -24,7 +24,7 @@
                     <img ng-src="{{item.icon}}" alt="Item Image" />
                 </td>
                 <td>
-                    <h4>{{item.name}}</h4>
+                    <h4 ng-bind-html="item.name | highlight:vm.searchValue">{{item.name}}</h4>
                 </td>
             </tr>
         </tbody>

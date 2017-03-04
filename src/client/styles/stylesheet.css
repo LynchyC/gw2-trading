@@ -1,17 +1,21 @@
-html, body {
-	height: 100%;
+html,
+body {
+    height: 100%;
 }
 
 #page-body {
-  min-height: 100%;
-	margin-bottom: -62px; 
+    min-height: 100%;
+    margin-bottom: -62px;
 }
+
 #page-body:after {
-  content: "";
-  display: block;
+    content: "";
+    display: block;
 }
-#page-footer, #page-body:after {
-	height: 22px; 
+
+#page-footer,
+#page-body:after {
+    height: 22px;
 }
 
 #page-footer div {
@@ -57,10 +61,10 @@ html, body {
 }
 
 #searchResultDiv table {
-     width: 70%;
+    width: 70%;
 }
 
-#searchResultDiv > h3:first-child {
+#searchResultDiv>h3:first-child {
     font-weight: bold;
 }
 
@@ -69,11 +73,11 @@ html, body {
 }
 
 #itemList tr td:nth-child(2) {
-    vertical-align:middle;
+    vertical-align: middle;
 }
 
 #itemList h4 {
-    color:#6699ff;
+    color: #6699ff;
     font-weight: bold;
 }
 
@@ -86,5 +90,6 @@ html, body {
     height: 64px;
 }
 
-
-
+.highlighted {
+    background: yellow
+}
