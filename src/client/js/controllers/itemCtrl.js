@@ -32,8 +32,8 @@ angular.module('gw2Calc').controller('ItemController', ['$state', '$stateParams'
 
         vm.setPage = function () {
             var start = ((vm.currentPage - 1) * 25), // 25 => Number of items to show between pagination pages
-                end   = start + 25;
-            vm.filteredResults = vm.searchResults.slice(start,end);
+                end = start + 25;
+            vm.filteredResults = vm.searchResults.slice(start, end);
         };
 
 
@@ -79,6 +79,12 @@ angular.module('gw2Calc').controller('ItemController', ['$state', '$stateParams'
 
                     // Expect an object array to return.
                     vm.searchResults = results.data;
+
+                    // Pagination: Total items attribute
+                    vm.totalItems = vm.searchResults.length;
+                    // Pagination: Number of pages to display
+                    vm.numPages = Math.ceil(vm.searchResults.length / 25);
+                    
                     vm.setPage(); // Show the first page of results
                 }
 
