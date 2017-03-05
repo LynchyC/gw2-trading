@@ -52,10 +52,6 @@ body {
     vertical-align: middle;
 }
 
-.itemCoreData img {
-    width: 64px;
-    height: 64px;
-}
 
 #recipeImg {
     width: 24px;
@@ -96,33 +92,65 @@ body {
 }
 
 .item-Junk {
-    border:3px solid #AAA;
+    border: 3px solid #AAA;
 }
 
 .item-Basic {
-    border:3px solid #000;
+    border: 3px solid #000;
 }
 
 .item-Fine {
-    border:3px solid #62A4DA;
+    border: 3px solid #62A4DA;
 }
 
 .item-Masterwork {
-    border:3px solid #1a9306;
+    border: 3px solid #1a9306;
 }
 
 .item-Rare {
-    border:3px solid #fcd00b;
+    border: 3px solid #fcd00b;
 }
 
 .item-Exotic {
-    border:3px solid #ffa405;
+    border: 3px solid #ffa405;
 }
 
 .item-Ascended {
-    border:3px solid #fb3e8d;
+    border: 3px solid #fb3e8d;
 }
 
-.item-Junk {
-    border:3px solid #4C139D;
+.item-Legendary {
+    border: 3px solid #4C139D;
+}
+
+#itemDataHeader {
+    margin-top: 20px;
+}
+
+#itemDataHeader img {
+    float: left;
+    width: 64px;
+    height: 64px;
+}
+
+#itemDataHeader h2 {
+    padding-top: 5px;
+    margin-bottom: 0px;
+}
+
+#itemDataHeader b {
+    margin-left: 5px;
+}
+
+#itemDataHeader span {
+    font-size: 14px;
+    margin-left: 7px;
+}
+
+#commerceSection {
+    display: inline-block;
+}
+
+.commerceDetails {
+    margin: 10px 0px;
 }
