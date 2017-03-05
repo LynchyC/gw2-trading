@@ -21,7 +21,7 @@
         <tbody id="itemList">
             <tr ng-repeat="item in vm.filteredResults" ui-sref="home.search({item: {{item.itemID}}})">
                 <td class="itemListImg">
-                    <img ng-src="{{item.icon}}" alt="Item Image" />
+                    <img class="item-{{item.rarity}}" ng-src="{{item.icon}}" alt="Item Image" />
                 </td>
                 <td>
                     <h4 ng-bind-html="item.name | highlight:vm.searchValue">{{item.name}}</h4>

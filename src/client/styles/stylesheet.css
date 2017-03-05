@@ -94,3 +94,35 @@ body {
 .highlighted {
     background: yellow
 }
+
+.item-Junk {
+    border:3px solid #AAA;
+}
+
+.item-Basic {
+    border:3px solid #000;
+}
+
+.item-Fine {
+    border:3px solid #62A4DA;
+}
+
+.item-Masterwork {
+    border:3px solid #1a9306;
+}
+
+.item-Rare {
+    border:3px solid #fcd00b;
+}
+
+.item-Exotic {
+    border:3px solid #ffa405;
+}
+
+.item-Ascended {
+    border:3px solid #fb3e8d;
+}
+
+.item-Junk {
+    border:3px solid #4C139D;
+}
