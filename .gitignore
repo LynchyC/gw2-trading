@@ -2,3 +2,5 @@
 /.vscode
 /src/client/lib
 /typings
+.cache
+dist

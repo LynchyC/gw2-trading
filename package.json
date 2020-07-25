@@ -1,14 +1,6 @@
 {
-  "name": "gw2_calculator",
-  "version": "1.0.0",
-  "description": "MEAN stack application that calculates your Black Lion Trading purchases",
-  "main": "server.js",
-  "scripts": {
-    "start": "node src/server/app.js",
-    "postinstall": "bower update"
-  },
   "author": "Charlie Lynch",
-  "license": "Apache 2.0",
+  "description": "MEAN stack application that calculates your Black Lion Trading purchases",
   "dependencies": {
     "async": "^2.0.0-rc.6",
     "axios": "^0.12.0",
@@ -16,6 +8,10 @@
     "express": "^4.13.4",
     "mocha": "^2.4.5",
     "mongodb": "^2.2.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.1.1",
     "swig": "^1.4.2"
   },
   "devDependencies": {
@@ -32,7 +28,16 @@
     "gulp-util": "^3.0.7",
     "jshint": "^2.9.2",
     "jshint-stylish": "^2.2.0",
+    "parcel-bundler": "^1.12.4",
     "wiredep": "^4.0.0",
     "yargs": "^4.8.1"
-  }
+  },
+  "license": "Apache 2.0",
+  "main": "server.js",
+  "name": "gw2_calculator",
+  "scripts": {
+    "start": "node src/server/app.js",
+    "postinstall": "bower update"
+  },
+  "version": "1.0.0"
 }
