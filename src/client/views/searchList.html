@@ -1,0 +1,32 @@
+<center ng-show="vm.searchingForItem" id="loadingGif">
+    <img src="/images/rolling.gif" />
+</center>
+
+<div class="searchErrorMessage" ng-show="vm.errorMessage">
+    <h2 class="text-center">{{vm.errorMessage}}</h2>
+</div>
+
+<div id="searchResultDiv" ng-show="vm.searchResults">
+
+    <h3 ng-hide="vm.errorMessage">Found {{vm.searchResults.length}} result<span ng-show="vm.searchResults.length > 1">s</span> for '{{vm.searchValue}}':</h3>
+
+    <ul uib-pagination total-items="vm.totalItems" ng-model="vm.currentPage" ng-change="vm.setPage()" items-per-page="25" 
+       num-pages="vm.numPages" ng-hide="vm.errorMessage" max-size="10" class="pagination-sm" boundary-links="true" force-ellipses="true"></ul>
+
+    <table ng-show="vm.searchResults.length > 0" class="table table-hover">
+        <thead>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody id="itemList">
+            <tr ng-repeat="item in vm.filteredResults" ui-sref="home.search({item: {{item.itemID}}})">
+                <td class="itemListImg">
+                    <img class="item-{{item.rarity}}" ng-src="{{item.icon}}" alt="Item Image" />
+                </td>
+                <td>
+                    <h4 ng-bind-html="item.name | highlight:vm.searchValue">{{item.name}}</h4>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

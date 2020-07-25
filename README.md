@@ -5,14 +5,14 @@ MEAN stack application that calculates your Black Lion Trading purchases
 * nodejs v4.4.1+
 * npm
 * bower
-* mongodb (Will need soon)
+* mongodb
 * gulp
 
 ## Installation Guide:
 Before running, update the bower packages `bower update` and npm modules `npm install`
 
 **Download Links (23-03-2016)**  
-Mongodb - https://www.mongodb.org/downloads#production (Will need soon)   
+Mongodb - https://www.mongodb.org/downloads#production 
 NodeJS - https://nodejs.org/en/download/
 
 ## Development

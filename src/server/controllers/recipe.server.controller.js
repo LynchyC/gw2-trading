@@ -21,20 +21,20 @@ function getRecipeData(id) {
         getRecipeOutputs(id)
             .then(outputIDs => {
                 if (outputIDs) {
-                    return recipeAPIData(outputIDs);
+                    return recipeAPIData(outputIDs)
+                        .then(recipes => {
+                            return db.addRecipes(id, recipes);
+                        })
+                        .then(recipeApiResult => {
+                            recipeObject = recipeApiResult;
+                            return getIngredientItemData(recipeObject);
+                        });
                 } else {
-                    resolve(null);
+                    return null;
                 }
             })
-            .then(recipes => {
-                return db.addRecipes(id, recipes);
-            })
-            .then(recipeApiResult => {
-                recipeObject = recipeApiResult;
-                return getIngredientItemData(recipeObject);
-            })
             .then(result => {
-                resolve(recipeObject);
+                resolve(result);
             })
             .catch((error) => {
                 if (error.serverMessage) {
@@ -47,14 +47,17 @@ function getRecipeData(id) {
 }
 
 /**
- * Uses the item id that is passed through to 
- * search for the recipes that craft the item.
+ * API: 'recipes/search?output={id}'
+ * RETURNS: https://wiki.guildwars2.com/wiki/API:2/recipes/search 
+ * DESCRIPTION: Uses the item id that is passed through to search for the recipes that craft the item.
  */
 function getRecipeOutputs(id) {
 
     return new Promise((resolve, reject) => {
         apiUtils.gw2APIData('recipes/search?output=', id)
             .then((returnIDs) => {
+
+                // Not all gw2 items have recipe data 
                 if (returnIDs.length === 0) {
                     resolve(null);
                 } else {
@@ -62,24 +65,22 @@ function getRecipeOutputs(id) {
                 }
             })
             .catch((error) => reject(error));
-
     });
 }
 
 /**
- * Returns information about recipes using their respective IDs
+ * API: 'recipes/{id}'
+ * RETURNS: https://wiki.guildwars2.com/wiki/API:2/recipes 
+ * DESCRIPTION: Returns information about recipes using their respective IDs
  */
 function recipeAPIData(ids) {
     return new Promise((resolve, reject) => {
         async.concat(ids, function recipeAPIData(id, callback) {
             apiUtils.gw2APIData('recipes/', id)
                 .then((recipe) => {
-                    callback(null, {
-                        recipeID: recipe.id,
-                        discipline: recipe.disciplines,
-                        itemCount: recipe.output_item_count, // jshint ignore:line
-                        ingredients: recipe.ingredients
-                    });
+                    // Redundant data. Item Data already contains ID.
+                    delete recipe.output_item_id;
+                    callback(null, recipe);
                 })
                 .catch((error) => {
                     reject(error);
@@ -95,15 +96,7 @@ function recipeAPIData(ids) {
 }
 
 /**
- * Prints to the console anything and everything 
- * that is passed through it
- */
-function printResults(result) {
-    console.log(JSON.stringify(result, null, 4));
-}
-
-/**
- *  Retrives the relative item and commerce data for each item ID that is passed.
+ *  DESCRIPTION: Using Item Controller, retrives the item and commerce data.
  */
 function getIngredientItemData(recipes) {
 
@@ -118,16 +111,10 @@ function getIngredientItemData(recipes) {
                 itemCtrl.getItemData(i.item_id)
                     .then(itemData => {
 
-                        if (itemData === null) {
-                            console.log(`${i.item_id} => ${JSON.stringify(itemData, null, 4)}`);
-                        }
-
-                        if (itemData.hasOwnProperty('buys')) {
-                            let total = (i.count * itemData.buys.unit_price);
+                        if (itemData.hasOwnProperty('commerce')) {
+                            let total = (i.count * itemData.commerce.buys.nonConvertedPrice);
                             r.recipeTotal = r.recipeTotal + total;
                             itemData.ingredientTotal = coinUtil.calculatePriceRatio(total);
-                            itemData.buys.price = coinUtil.calculatePriceRatio(itemData.buys.unit_price);
-                            itemData.sells.price = coinUtil.calculatePriceRatio(itemData.sells.unit_price);
                         }
 
                         Object.assign(r.ingredients[index], itemData);

@@ -11,7 +11,6 @@ const db = require('./../db/index.js');
 
 function getItemData(id) {
 
-
     return new Promise((resolve, reject) => {
 
         db.getItemByID(id)
@@ -29,6 +28,12 @@ function getItemData(id) {
                 }
             })
             .then(dbResult => {
+                if (dbResult.commerce) {
+                    const coinUtil = require('./../utils/coinUtils.js');
+                    dbResult.commerce.buys = coinUtil.transformCommerceObject(dbResult.commerce.buys);
+                    dbResult.commerce.sells = coinUtil.transformCommerceObject(dbResult.commerce.sells);
+                }
+
                 resolve(dbResult);
             })
             .catch(error => {
@@ -36,6 +41,12 @@ function getItemData(id) {
             });
     });
 }
+
+/**
+ * API: 'items/{id}'
+ * RESULT: https://wiki.guildwars2.com/wiki/API:2/items 
+ * DESCRIPTION: Retrieves GW2 item data  
+ */
 
 function itemAPISearch(id) {
 
@@ -45,12 +56,11 @@ function itemAPISearch(id) {
             .then((item) => {
 
                 // Only gather the properties needed
-                let itemData = {
-                    itemID: id,
-                    dateCreated: new Date(),
-                    name: item.name,
-                    img: item.icon
-                };
+                let itemData = item;
+                // Change ID property name to avoid confusion with MongoDB.
+                itemData.itemID = item.id;
+                itemData.dateCreated = new Date();
+                delete itemData.id;
 
                 // On to the next one...
                 resolve(itemData);
@@ -59,6 +69,12 @@ function itemAPISearch(id) {
     });
 }
 
+/**
+ * API: 'commerce/prices/{id}'
+ * RESULT: https://wiki.guildwars2.com/wiki/API:2/commerce/prices
+ * DESCRIPTION: Retrieves GW2 Commerce data
+ */
+
 function commerceAPISearch(item) {
     return new Promise((resolve, reject) => {
 
@@ -66,18 +82,13 @@ function commerceAPISearch(item) {
         apiUtils.gw2APIData('commerce/prices/', item.itemID)
             .then(function(commerceResult) {
 
-                if (commerceResult === null) {
-                    resolve(item);
-                } else {
-
-                    item.buys = commerceResult.buys;
-                    item.sells = commerceResult.sells;
+                if (commerceResult !== null) {
+                    item.commerce = commerceResult;
 
                     // Combines the item data and commerce data into one object.
-                    let gw2Result = Object.assign(commerceResult, item);
-                    delete gw2Result.id;
-                    resolve(gw2Result);
+                    delete item.commerce.id;
                 }
+                resolve(item);
             }).catch(error => reject(error));
     });
 }

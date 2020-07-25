@@ -1,6 +1,39 @@
-.alert {
+html,
+body {
+    height: 100%;
+}
+
+#page-body {
+    min-height: 100%;
+    margin-bottom: -62px;
+}
+
+#page-body:after {
+    content: "";
+    display: block;
+}
+
+#page-footer,
+#page-body:after {
     margin-top: 10px;
-    width: 75%;
+    height: 21px;
+}
+
+.hr {
+    margin-bottom: 10px;
+}
+
+.searchErrorMessage {
+    position: relative;
+    height: 100px;
+}
+
+.searchErrorMessage h2 {
+    font-weight: bold;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .coinDisplay {
@@ -19,8 +52,105 @@
     vertical-align: middle;
 }
 
+
 #recipeImg {
     width: 24px;
 }
 
+#searchResultDiv table {
+    width: 70%;
+}
 
+#searchResultDiv>h3:first-child {
+    font-weight: bold;
+}
+
+#itemList tr td:hover {
+    cursor: pointer;
+}
+
+#itemList tr td:nth-child(2) {
+    vertical-align: middle;
+}
+
+#itemList h4 {
+    color: #6699ff;
+    font-weight: bold;
+}
+
+.itemListImg {
+    width: 64px;
+}
+
+.itemListImg img {
+    width: inherit;
+    height: 64px;
+}
+
+.highlighted {
+    background: yellow
+}
+
+.item-Junk {
+    border: 3px solid #AAA;
+}
+
+.item-Basic {
+    border: 3px solid #000;
+}
+
+.item-Fine {
+    border: 3px solid #62A4DA;
+}
+
+.item-Masterwork {
+    border: 3px solid #1a9306;
+}
+
+.item-Rare {
+    border: 3px solid #fcd00b;
+}
+
+.item-Exotic {
+    border: 3px solid #ffa405;
+}
+
+.item-Ascended {
+    border: 3px solid #fb3e8d;
+}
+
+.item-Legendary {
+    border: 3px solid #4C139D;
+}
+
+#itemDataHeader {
+    margin-top: 20px;
+}
+
+#itemDataHeader img {
+    float: left;
+    width: 64px;
+    height: 64px;
+}
+
+#itemDataHeader h2 {
+    padding-top: 5px;
+    margin-bottom: 0px;
+}
+
+#itemDataHeader b {
+    margin-left: 5px;
+}
+
+#itemDataHeader span {
+    font-size: 14px;
+    margin-left: 7px;
+}
+
+#commerceSection {
+    display: inline-block;
+}
+
+.commerceDetails {
+    margin: 10px 0px;
+}

@@ -1,5 +1,5 @@
 angular.module('gw2Calc')
-    .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
 
         $urlRouterProvider.otherwise('/');
 
@@ -7,15 +7,23 @@ angular.module('gw2Calc')
             .state('home', {
                 url: '/',
                 controller: 'HomeController',
-                templateUrl: 'js/views/home.html'
+                controllerAs: 'vm',
+                templateUrl: '../views/home.html'
             })
 
             .state('home.search', {
-                url: '^/search/:itemID',
+                url: '^/search/:item',
                 controller: 'ItemController',
-                templateUrl: 'js/views/search.html',
+                controllerAs: 'vm',
+                templateUrl: function ($stateParams) {
+                    if (!isNaN($stateParams.item)) {
+                        return '../views/searchID.html';
+                    } else {
+                        return '../views/searchList.html';
+                    }
+                },
                 params: {
-                    itemID: null
+                    item: null
                 }
             });
 

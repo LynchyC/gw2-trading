@@ -1,3 +1,6 @@
 /node_modules
 /.vscode
 /src/client/lib
+/typings
+.cache
+dist

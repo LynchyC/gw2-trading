@@ -33,14 +33,10 @@ function getItemByName(searchText) {
         database.getDB().then(db => {
 
             var cursor = db.items.find({
-                $text: {
-                    $search: searchText
+                name: {
+                    $regex: new RegExp(searchText),
+                    $options: 'i'
                 }
-            }, {
-                name: 1,
-                img: 1,
-                itemID: 1,
-                _id: 0
             }).toArray();
 
             return cursor;

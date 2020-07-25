@@ -1,0 +1,123 @@
+<center ng-show="vm.searchingForItem" id="loadingGif">
+    <img src="/images/rolling.gif" />
+</center>
+
+<div id="itemDataHeader">
+    <img class="item-{{vm.item.data.rarity}}" ng-src="{{vm.item.data.icon}}" />
+    <h2><b>{{vm.item.data.name}}</b></h2>
+    <span ng-show="vm.item.data.description && vm.item.data.description !== """>{{vm.item.data.description}}</span>
+</div>
+
+<div class="searchErrorMessage" ng-show="vm.errorMessage">
+    <h2 class="text-center">{{vm.errorMessage}}</h2>
+</div>
+
+<div ng-show="vm.item.data">
+    <hr />
+
+    <h3>
+        <u><b>Item Data</b></u>
+    </h3>
+
+    <h5>Required Level: {{vm.item.data.level}}</h5>
+</div>
+
+<hr />
+
+<div id="commerceSection" ng-show="vm.item.commerce">
+
+    <h3>
+        <u><b>Commerce Data</b></u>
+    </h3>
+
+    <div class="commerceDetails" ng-show="vm.item.commerce.buys">
+        <div>
+            <span><b>Buying Price:</b></span>
+            <ul class="coinDisplay">
+                <li>{{vm.item.commerce.buys.price[0]}} <img src="/images/goldCoin.png" /></li>
+                <li>{{vm.item.commerce.buys.price[1]}} <img src="/images/silverCoin.png" /></li>
+                <li>{{vm.item.commerce.buys.price[2]}} <img src="/images/bronzeCoin.png" /></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="commerceDetails" ng-show="vm.item.commerce.sells">
+        <div>
+            <span><b>Selling Price:</b></span>
+            <ul class="coinDisplay">
+                <li>{{vm.item.commerce.sells.price[0]}} <img src="/images/goldCoin.png" /></li>
+                <li>{{vm.item.commerce.sells.price[1]}} <img src="/images/silverCoin.png" /></li>
+                <li>{{vm.item.commerce.sells.price[2]}} <img src="/images/bronzeCoin.png" /></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="commerceDetails">
+        <span><b>Demand:</b> {{vm.item.commerce.buys.quantity}}</span>
+    </div>
+
+    <div class="commerceDetails">
+        <span><b>Supply:</b> {{vm.item.commerce.sells.quantity}}</span>
+    </div>
+</div>
+
+
+<div ng-show="vm.item.recipeData">
+    <hr />
+
+    <h3>
+        <u><b>Recipe Data</b></u>
+    </h3>
+
+    <uib-tabset active="active">
+        <uib-tab ng-repeat="recipe in vm.item.recipeData" index="$index" heading="{{recipe.disciplines[0]}}">
+            <h3><b>{{recipe.disciplines[0]}}</b></h3>
+            <table class="table">
+                <thead>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Cost (Single)</th>
+                    <th>Cost (Total)</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="i in recipe.ingredients">
+                        <td>{{i.count}}</td>
+                        <td><img id="recipeImg" ng-src="{{i.icon}}" alt="Item Image">
+                            <span>
+                                <a ui-sref="home.search({item: {{i.itemID}}})"> {{i.name}}</a>
+                            </span>
+                        </td>
+                        <td ng-show="!i.commerce.buys">0</td>
+                        <td ng-show="i.commerce.buys">
+                            <ul class="coinDisplay">
+                                <li>{{i.commerce.buys.price[0]}} <img src="/images/goldCoin.png" /></li>
+                                <li>{{i.commerce.buys.price[1]}} <img src="/images/silverCoin.png" /></li>
+                                <li>{{i.commerce.buys.price[2]}} <img src="/images/bronzeCoin.png" /></li>
+                            </ul>
+                        </td>
+                        <td ng-show="!i.ingredientTotal">0</td>
+                        <td ng-show="i.ingredientTotal">
+                            <ul class="coinDisplay">
+                                <li>{{i.ingredientTotal[0]}} <img src="/images/goldCoin.png" /></li>
+                                <li>{{i.ingredientTotal[1]}} <img src="/images/silverCoin.png" /></li>
+                                <li>{{i.ingredientTotal[2]}} <img src="/images/bronzeCoin.png" /></li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <b>Total:</b></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <ul class="coinDisplay">
+                                <li>{{recipe.recipeTotal[0]}} <img src="/images/goldCoin.png" /></li>
+                                <li>{{recipe.recipeTotal[1]}} <img src="/images/silverCoin.png" /></li>
+                                <li>{{recipe.recipeTotal[2]}} <img src="/images/bronzeCoin.png" /></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </uib-tab>
+    </uib-tabset>
+</div>

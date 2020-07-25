@@ -1,16 +1,17 @@
 'use strict';
 
-angular.module('gw2Calc').controller('HomeController', ['$scope', '$state',
+angular.module('gw2Calc').controller('HomeController', ['$state', function ($state) {
+    var vm = this;
+    vm.search = null;
 
-    function($scope, $state) {
+    vm.getItem = function () {
+        $state.go('home.search', {
+            item: vm.search
+        });
+    };
 
-        $scope.itemID = null;
+    vm.checkValidity = function () {
+        return !isNaN(vm.search) ? false : (vm.search.length < 3) ? true : false;
+    };
 
-        $scope.getItem = function() {
-            $state.go('home.search', {
-                itemID: $scope.item.ID
-            });
-        };
-
-    }
-]);
+}]);
