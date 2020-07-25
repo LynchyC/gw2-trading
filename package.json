@@ -36,8 +36,9 @@
   "main": "server.js",
   "name": "gw2_calculator",
   "scripts": {
-    "start": "node src/server/app.js",
-    "postinstall": "bower update"
+    "postinstall": "bower update",
+    "server": "node src/server/app.js",
+    "start": "parcel ./src/client/index.html"
   },
   "version": "1.0.0"
 }
